@@ -56,18 +56,24 @@ public abstract class NhanVien {
 
     //Hàm xem thông tin 1 nhân viên
     public void xemThongTin() {
-        System.out.printf("Mã nhân viên: %s", this.maNhanVien);
-        System.out.printf("Họ và tên: %s", this.hoTen);
-        System.out.printf("Email: %s", this.email);
-        System.out.printf("Giới tính: %s", this.gioiTinh);
-        System.out.printf("Hệ số lương: %.1f", this.heSoLuong);
-        System.out.printf("Lương cơ bản: %f", this.luongCoBan);
-        //Xem phòng ban???
+        System.out.printf("Mã nhân viên: %s\n", this.maNhanVien);
+        System.out.printf("Họ và tên: %s\n", this.hoTen);
+        System.out.printf("Email: %s\n", this.email);
+        System.out.printf("Giới tính: %s\n", this.gioiTinh);
+        System.out.printf("Hệ số lương: %.1f\n", this.heSoLuong);
+        System.out.printf("Lương cơ bản: %f\n", this.luongCoBan);
+        System.out.printf("Phòng ban trực thuộc: %s\n", this.phongBan.getTenPhongBan());
     }
 
     //Hàm xem danh sách dự án tham gia của nhân viên này
-    public List<DuAn> xemDanhSachDuAnThamGia() {
-        return this.getDanhSachDuAnThamGia();
+    public void xemDanhSachDuAnThamGia() {
+        System.out.printf("Danh sách dự án tham gia của %s\n", this.hoTen);
+        for (DuAn duAn: danhSachDuAnThamGia) {
+            System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %s\nNgày kết thúc: %s" +
+                    "\nTổng kinh phí: %f\nChủ nhiệm dự án: %s\n\n", duAn.getMaDuAn(), duAn.getTenDuAn(),
+                    CauHinh.f.format(duAn.getNgayBatDau()), CauHinh.f.format(duAn.getNgayKetThuc()), duAn.getTongKinhPhi(),
+                    duAn.getChuNhiemDuAn().getHoTen());
+        }
     }
 
     //Hàm thêm dự án tham gia
