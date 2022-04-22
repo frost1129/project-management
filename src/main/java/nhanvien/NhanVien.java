@@ -5,10 +5,21 @@ import phongban.PhongBan;
 import dungchung.CauHinh;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public abstract class NhanVien {
-    private int maNhanVien;
+    private static int dem = 0;
+    /**
+     * Quy ước
+     * NhanVienBinhThuong: 000
+     * NhanVienQuanLy: 001
+     * LapTrinhVien: 002
+     * ThietKeVien: 003
+     * KiemThuVien: 004
+     */
+    private String maNhanVien = String.format("%05d", ++dem);
+    private Calendar ngaySinh;
     private String hoTen;
     private String email;
     private String gioiTinh;
@@ -18,10 +29,10 @@ public abstract class NhanVien {
     private List<DuAn> danhSachDuAnThamGia = new ArrayList<>();
 
     //Phương thức khởi tạo
-    public NhanVien(int maNhanVien, String hoTen, String email, String gioiTinh, PhongBan phongBan,
+    public NhanVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                     double heSoLuong, double luongCoBan) {
-        this.setMaNhanVien(maNhanVien);
         this.setHoTen(hoTen);
+        this.setNgaySinh(ngaySinh);
         this.setEmail(email);
         this.setGioiTinh(gioiTinh);
         this.setPhongBan(phongBan);
@@ -29,23 +40,27 @@ public abstract class NhanVien {
         this.setLuongCoBan(luongCoBan);
     }
 
-    //Hàm thêm thông tin 1 nhân viên
+    /**
+     * Nhập thông tin nhân viên từ bàn phím
+     */
     public void nhapThongTin() {
-        System.out.print("Nhập mã nhân viên: ");
-        this.maNhanVien = Integer.parseInt(CauHinh.sc.nextLine());
-
         System.out.print("Nhập họ và tên: ");
         this.hoTen = CauHinh.sc.nextLine();
+
+        System.out.print("Nhập ngày/tháng/năm sinh: " +
+                "\nNhập ngày: ");
+        int ngay = Integer.parseInt(CauHinh.sc.nextLine());
+        System.out.print("Nhập tháng: ");
+        int thang = Integer.parseInt(CauHinh.sc.nextLine());
+        System.out.print("Nhập năm: ");
+        int nam = Integer.parseInt(CauHinh.sc.nextLine());
+        this.ngaySinh.set(nam, thang, ngay);
 
         System.out.print("Nhập email: ");
         this.setEmail(CauHinh.sc.nextLine());
 
         System.out.print("Nhập giới tính: ");
         this.gioiTinh = CauHinh.sc.nextLine();
-
-        System.out.print("Nhập mã phòng ban: ");
-        int maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
-        //Nhập phòng ban???
 
         System.out.print("Nhập hệ số lương: ");
         this.heSoLuong = Integer.parseInt(CauHinh.sc.nextLine());
@@ -54,9 +69,11 @@ public abstract class NhanVien {
         this.luongCoBan = Integer.parseInt(CauHinh.sc.nextLine());
     }
 
-    //Hàm xem thông tin 1 nhân viên
+    /**
+     * Xem thông tin đối tượng nhân viên được gọi
+     */
     public void xemThongTin() {
-        System.out.printf("Mã nhân viên: %s\n", this.maNhanVien);
+        System.out.printf("Mã nhân viên: %s\n", this.getMaNhanVien());
         System.out.printf("Họ và tên: %s\n", this.hoTen);
         System.out.printf("Email: %s\n", this.email);
         System.out.printf("Giới tính: %s\n", this.gioiTinh);
@@ -65,8 +82,10 @@ public abstract class NhanVien {
         System.out.printf("Phòng ban trực thuộc: %s\n", this.phongBan.getTenPhongBan());
     }
 
-    //Hàm xem danh sách dự án tham gia của nhân viên này
-    public void xemDanhSachDuAnThamGia() {
+    /**
+     * Xem danh sách dự án mà nhân viên này tham gia
+     */
+    public void danhSachDuAnThamGia() {
         System.out.printf("Danh sách dự án tham gia của %s\n", this.hoTen);
         for (DuAn duAn: danhSachDuAnThamGia) {
             System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %s\nNgày kết thúc: %s" +
@@ -76,11 +95,43 @@ public abstract class NhanVien {
         }
     }
 
-    //Hàm thêm dự án tham gia
-    public void themDuAnThamGia(DuAn duAn) {
-        danhSachDuAnThamGia.add(duAn);
+    /**
+     * Thêm phòng ban trực thuộc, điều kiện phòng ban này có trong danh sách phòng ban
+     * @param ds
+     * @param maPhongBan
+     * @return true nếu thêm thành công, ngược lại false
+     */
+    public boolean nhapPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
+        for (PhongBan pb : ds) {
+            if (pb.getMaPhongBan() == maPhongBan) {
+                this.phongBan = pb;
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * Thêm dự án tham gia cho nhân viên, điều kiện dự án này tồn tại trong danh sách dự án.
+     * @param ds
+     * @param maDuAn
+     * @return true nếu thêm thành công, ngược lại false
+     */
+    public boolean themDuAnThamGia(List<DuAn> ds, int maDuAn) {
+        for (DuAn da : ds) {
+            if (da.getMaDuAn() == maDuAn) {
+                danhSachDuAnThamGia.add(da);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Xóa dự án tham gia
+     * @param maDuAn
+     * @return
+     */
     public boolean xoaDuAnThamGia(int maDuAn) {
         for(DuAn duAn: danhSachDuAnThamGia) {
             if (duAn.getMaDuAn() == maDuAn) {
@@ -91,16 +142,15 @@ public abstract class NhanVien {
         return false;
     }
 
-    //Hàm tính lương - TRỪU TƯỢNG
+    /**
+     * Tính lương cho nhân viên, phương thức này là trừu tượng
+     * @return tiền lương của nhân viên
+     */
     public abstract  double tinhLuong();
 
     //Các setter và getter
-    public int getMaNhanVien() {
-        return maNhanVien;
-    }
-
-    public void setMaNhanVien(int maNhanVien) {
-        this.maNhanVien = maNhanVien;
+    public String getMaNhanVien() {
+        return this.maNhanVien;
     }
 
     public String getHoTen() {
@@ -157,5 +207,17 @@ public abstract class NhanVien {
 
     public void setDanhSachDuAn(List<DuAn> danhSachDuAn) {
         this.danhSachDuAnThamGia = danhSachDuAn;
+    }
+
+    public Calendar getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Calendar ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public void setMaNhanVien(String maNhanVien) {
+        this.maNhanVien = maNhanVien;
     }
 }

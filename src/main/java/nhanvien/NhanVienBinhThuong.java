@@ -2,10 +2,16 @@ package nhanvien;
 
 import phongban.PhongBan;
 
+import java.util.Calendar;
+
 public class NhanVienBinhThuong extends NhanVien {
-    public NhanVienBinhThuong(int maNhanVien, String hoTen, String email, String gioiTinh, PhongBan phongBan,
-                    double heSoLuong, double luongCoBan) {
-        super(maNhanVien, hoTen, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+    {
+        super.setMaNhanVien("000" + super.getMaNhanVien());
+    }
+
+    public NhanVienBinhThuong(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
+                       double heSoLuong, double luongCoBan) {
+        super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
     }
 
     @Override

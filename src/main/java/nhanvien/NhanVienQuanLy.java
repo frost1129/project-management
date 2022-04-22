@@ -10,9 +10,13 @@ public class NhanVienQuanLy extends NhanVien {
     private final List<Calendar> ngayNhamChuc = new ArrayList<>();
     private final List<PhongBan> phongBanQuanLy = new ArrayList<>();
 
-    public NhanVienQuanLy(int maNhanVien, String hoTen, String email, String gioiTinh, PhongBan phongBan,
-                              double heSoLuong, double luongCoBan) {
-        super(maNhanVien, hoTen, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+    {
+        super.setMaNhanVien("001" + super.getMaNhanVien());
+    }
+
+    public NhanVienQuanLy(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
+                       double heSoLuong, double luongCoBan) {
+        super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
     }
 
     @Override

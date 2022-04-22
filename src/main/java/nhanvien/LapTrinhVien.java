@@ -2,16 +2,30 @@ package nhanvien;
 
 import phongban.PhongBan;
 
+import java.util.Calendar;
+
 public class LapTrinhVien extends NhanVien {
     private double luongOvertime;
 
-    public LapTrinhVien(int maNhanVien, String hoTen, String email, String gioiTinh, PhongBan phongBan,
-                    double heSoLuong, double luongCoBan) {
-        super(maNhanVien, hoTen, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+    {
+        super.setMaNhanVien("002" + super.getMaNhanVien());
+    }
+
+    public LapTrinhVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
+                       double heSoLuong, double luongCoBan) {
+        super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
     }
 
     @Override
     public double tinhLuong() {
-        return super.getHeSoLuong() * super.getLuongCoBan() + this.luongOvertime;
+        return super.getHeSoLuong() * super.getLuongCoBan() + this.getLuongOvertime();
+    }
+
+    public double getLuongOvertime() {
+        return luongOvertime;
+    }
+
+    public void setLuongOvertime(double luongOvertime) {
+        this.luongOvertime = luongOvertime;
     }
 }
