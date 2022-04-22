@@ -12,8 +12,9 @@ public class ThietKeVien extends NhanVien {
     }
 
     public ThietKeVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
-                       double heSoLuong, double luongCoBan) {
+                       double heSoLuong, double luongCoBan, double bonus) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+        this.bonus = bonus;
     }
 
     @Override

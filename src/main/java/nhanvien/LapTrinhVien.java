@@ -12,8 +12,9 @@ public class LapTrinhVien extends NhanVien {
     }
 
     public LapTrinhVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
-                       double heSoLuong, double luongCoBan) {
+                       double heSoLuong, double luongCoBan, double luongOvertime) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+        this.luongOvertime = luongOvertime;
     }
 
     @Override

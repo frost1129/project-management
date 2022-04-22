@@ -29,6 +29,8 @@ public abstract class NhanVien {
     private List<DuAn> danhSachDuAnThamGia = new ArrayList<>();
 
     //Phương thức khởi tạo
+    public NhanVien() {};
+
     public NhanVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                     double heSoLuong, double luongCoBan) {
         this.setHoTen(hoTen);
@@ -78,7 +80,7 @@ public abstract class NhanVien {
         System.out.printf("Email: %s\n", this.email);
         System.out.printf("Giới tính: %s\n", this.gioiTinh);
         System.out.printf("Hệ số lương: %.1f\n", this.heSoLuong);
-        System.out.printf("Lương cơ bản: %f\n", this.luongCoBan);
+        System.out.printf("Lương cơ bản: %.1f VNĐ\n", this.luongCoBan);
         System.out.printf("Phòng ban trực thuộc: %s\n", this.phongBan.getTenPhongBan());
     }
 
@@ -112,19 +114,11 @@ public abstract class NhanVien {
     }
 
     /**
-     * Thêm dự án tham gia cho nhân viên, điều kiện dự án này tồn tại trong danh sách dự án.
-     * @param ds
-     * @param maDuAn
-     * @return true nếu thêm thành công, ngược lại false
+     * Thêm dự án tham gia cho nhân viên
+     * @param duAn
      */
-    public boolean themDuAnThamGia(List<DuAn> ds, int maDuAn) {
-        for (DuAn da : ds) {
-            if (da.getMaDuAn() == maDuAn) {
-                danhSachDuAnThamGia.add(da);
-                return true;
-            }
-        }
-        return false;
+    public void themDuAnThamGia(DuAn duAn) {
+        danhSachDuAnThamGia.add(duAn);
     }
 
     /**

@@ -11,8 +11,9 @@ public class KiemThuVien extends NhanVien {
     }
 
     public KiemThuVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
-                       double heSoLuong, double luongCoBan) {
+                       double heSoLuong, double luongCoBan, int soLoiPhatHien) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+        this.soLoiPhatHien = soLoiPhatHien;
     }
 
     @Override

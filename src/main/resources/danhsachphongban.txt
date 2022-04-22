@@ -1,0 +1,16 @@
+1
+Phòng Kỹ thuật CNTT
+00200001
+#
+2
+Phòng Kế toán
+00300002
+#
+3
+Phòng Nhân sự
+00300002
+#
+4
+Phòng Ngoại giao
+00200001
+#

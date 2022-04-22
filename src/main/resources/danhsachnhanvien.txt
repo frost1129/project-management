@@ -1,0 +1,50 @@
+002
+Nguyễn Vân Anh
+09/10/2002
+2051012004anh@ou.edu.vn
+Nam
+1
+4.0
+10000000
+2000000
+#
+003
+Vũ Nguyễn Mai Linh
+29/11/2002
+2051012054linh@ou.edu.vn
+Nữ
+2
+4.0
+10000000
+3000000
+#
+000
+Lê Huỳnh
+08/12/2002
+huynhle@gmail.com
+Nam
+1
+3.0
+5000000
+-1
+#
+001
+Trần Ngọc Thư
+08/08/2001
+thutran@gmail.com
+Nữ
+3
+3.5
+6000000
+-1
+#
+004
+Thoa Nguyễn
+02/01/2003
+thoanguyen@gmail.com
+Nữ
+1
+2.0
+3000000
+4
+#

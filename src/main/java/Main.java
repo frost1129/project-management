@@ -1,16 +1,14 @@
 import duan.QuanLyDuAn;
 import dungchung.CauHinh;
-import nhanvien.NhanVienBinhThuong;
 import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Calendar;
 
 public class Main {
-    static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
-    static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
-    static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
+    public static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
+    public static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
+    public static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
 
     public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         //Khai báo biến
@@ -53,21 +51,22 @@ public class Main {
     //Hàm in menu các chức năng của nhân viên
     public static void menuNhanVien () throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         int luaChon;
-        System.out.print("--- CHỨC NĂNG NHÂN VIÊN ---" +
-                "\n1. Thêm 1 nhân viên" +
-                "\n2. Xem danh sách nhân viên" +
-                "\n3. Xem danh sách dự án tham gia của 1 nhân viên" +
-                "\n4. Tìm kiếm nhân viên theo họ tên, ngày sinh, theo phòng ban" +
-                "\n5. Tính lương cho 1 nhân viên" +
-                "\n0. Thoát menu nhân viên" +
-                "\nNhập lựa chọn (0 - 4): ");
         while (true) {
-            menuNhanVien();
+            System.out.print("--- CHỨC NĂNG NHÂN VIÊN ---" +
+                    "\n1. Thêm 1 nhân viên" +
+                    "\n2. Xem danh sách nhân viên" +
+                    "\n3. Thêm dự án tham gia cho nhân viên" +
+                    "\n4. Xóa dự án tham gia của nhân viên" +
+                    "\n5. Xem danh sách dự án tham gia của 1 nhân viên" +
+                    "\n6. Tìm kiếm nhân viên theo họ tên, ngày sinh, theo phòng ban" +
+                    "\n7. Tính lương cho 1 nhân viên" +
+                    "\n0. Thoát menu nhân viên" +
+                    "\nNhập lựa chọn (0 - 7): ");
             luaChon = Integer.parseInt(CauHinh.sc.nextLine());
             if (luaChon == 0) {
                 System.out.println("Thoát chức năng nhân viên...");
                 break;
-            } else if (luaChon >= 1 && luaChon <= 4) {
+            } else if (luaChon >= 1 && luaChon <= 7) {
                 switch (luaChon) {
                     case 1:
                         int luaChonNhanVien;
@@ -108,10 +107,15 @@ public class Main {
                         danhSachNhanVien.xemDanhSachNhanVien();
                         break;
                     case 3:
+
+                        System.out.print("Nhập mã dự án muốn thêm: ");
+                        int maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
+
+                    case 5:
                         System.out.print("** Nhập mã nhân viên muốn xem: ");
                         danhSachNhanVien.xemDanhSachDuAnThamGia(CauHinh.sc.nextLine());
                         break;
-                    case 4:
+                    case 6:
                         System.out.print("** Nhập họ tên nhân viên: ");
                         String hoTen = CauHinh.sc.nextLine();
 
@@ -129,7 +133,7 @@ public class Main {
                         System.out.println("========== DANH SÁCH NHÂN VIÊN TÌM ĐƯỢC ==========");
                         danhSachNhanVien.timNhanVien(hoTen, CauHinh.c, tenPhongBan).forEach(nhanVien -> nhanVien.xemThongTin());
                         break;
-                    case 5:
+                    case 7:
                         System.out.print("Nhập mã số nhân viên muốn tính lương: ");
                         String maNhanVien = CauHinh.sc.nextLine();
 
