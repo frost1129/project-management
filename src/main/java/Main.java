@@ -1,5 +1,6 @@
 import duan.QuanLyDuAn;
 import dungchung.CauHinh;
+import nhanvien.NhanVien;
 import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
@@ -87,7 +88,7 @@ public class Main {
                             System.out.print("** Nhập mã phòng ban cho nhân viên mới: ");
                             maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
                             if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
-                                System.out.println("Phòng ban không tồn tại, nhập lại!");
+                                System.out.println("** Phòng ban không tồn tại, nhập lại!");
                             }
                         } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
 
@@ -115,13 +116,67 @@ public class Main {
                         danhSachNhanVien.xemDanhSachNhanVien();
                         break;
                     case 3:
+                        int maDuAn;
+                        String maNhanVien;
+                        do {
+                            System.out.print("* Nhập mã nhân viên: ");
+                            maNhanVien = CauHinh.sc.nextLine();
+                            if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
+                                System.out.println("* Nhân viên không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachNhanVien.tonTaiNhanVien(maNhanVien));
 
-                        System.out.print("Nhập mã dự án muốn thêm: ");
-                        int maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
+                        do {
+                            System.out.print("* Nhập mã dự án muốn thêm: ");
+                            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
+                            if (!danhSachDuAn.tonTaiDuAn(maDuAn)) {
+                                System.out.println("* Mã dự án không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachDuAn.tonTaiDuAn(maDuAn));
 
+                        //Kiểm tra điều kiện số lượng dự án cho phép tham gia
+                        if (danhSachNhanVien.timNhanVien(maNhanVien).getDanhSachDuAnThamGia().size() <= 3) {
+                            danhSachNhanVien.timNhanVien(maNhanVien).themDuAnThamGia(danhSachDuAn.timDuAn(maDuAn));
+                        } else {
+                            System.out.println("* Thêm thất bại! Nhân viên này tham gia vượt quá số lượng dự án cho phép");
+                        }
+                        break;
+                    case 4:
+                        do {
+                            System.out.print("* Nhập mã nhân viên: ");
+                            maNhanVien = CauHinh.sc.nextLine();
+                            if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
+                                System.out.println("* Nhân viên không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachNhanVien.tonTaiNhanVien(maNhanVien));
+
+                        do {
+                            System.out.print("* Nhập mã dự án muốn xóa: ");
+                            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
+                            if (!danhSachNhanVien.timNhanVien(maNhanVien).tonTaiDuAnThamGia(maDuAn)) {
+                                System.out.println("* Mã dự án không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachNhanVien.timNhanVien(maNhanVien).tonTaiDuAnThamGia(maDuAn));
+
+                        if (danhSachNhanVien.timNhanVien(maNhanVien).xoaDuAnThamGia(maDuAn)) {
+                            System.out.println("* Xóa dự án tham gia thành công!");
+                        } else {
+                            System.out.println("* Xóa thất bại!");
+                        }
                     case 5:
-                        System.out.print("** Nhập mã nhân viên muốn xem: ");
-                        danhSachNhanVien.xemDanhSachDuAnThamGia(CauHinh.sc.nextLine());
+                        do {
+                            System.out.print("* Nhập mã nhân viên muốn xem: ");
+                            maNhanVien = CauHinh.sc.nextLine();
+                            if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
+                                System.out.println("* Nhân viên không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachNhanVien.tonTaiNhanVien(maNhanVien));
+                        System.out.printf("========== DANH SÁCH DỰ ÁN THAM GIA CỦA: %s ==========", danhSachNhanVien.timNhanVien(maNhanVien).getHoTen());
+                        if (danhSachNhanVien.timNhanVien(maNhanVien).getDanhSachDuAnThamGia() != null) {
+                            danhSachNhanVien.xemDanhSachDuAnThamGia(maNhanVien);
+                        } else {
+                            System.out.println("* Rỗng!");
+                        }
                         break;
                     case 6:
                         System.out.print("** Nhập họ tên nhân viên: ");
@@ -133,19 +188,29 @@ public class Main {
                         int thang = Integer.parseInt(CauHinh.sc.nextLine());
                         System.out.print("** Nhập năm sinh: ");
                         int nam = Integer.parseInt(CauHinh.sc.nextLine());
-                        CauHinh.c.set(nam, thang, ngay);
+                        CauHinh.d = CauHinh.f.parse(ngay + "/" + thang + "/" + nam);
+                        CauHinh.c.setTime(CauHinh.d);
 
                         System.out.print("** Nhập tên phòng ban: ");
                         String tenPhongBan = CauHinh.sc.nextLine();
 
                         System.out.println("========== DANH SÁCH NHÂN VIÊN TÌM ĐƯỢC ==========");
-                        danhSachNhanVien.timNhanVien(hoTen, CauHinh.c, tenPhongBan).forEach(nhanVien -> nhanVien.xemThongTin());
+                        if (danhSachNhanVien.timNhanVien(hoTen, CauHinh.c, tenPhongBan) == null) {
+                            System.out.println("Rỗng!");
+                        } else {
+                            danhSachNhanVien.timNhanVien(hoTen, CauHinh.c, tenPhongBan).forEach(NhanVien::xemThongTin);
+                        }
                         break;
                     case 7:
-                        System.out.print("Nhập mã số nhân viên muốn tính lương: ");
-                        String maNhanVien = CauHinh.sc.nextLine();
-
-                        danhSachNhanVien.timNhanVien(maNhanVien).tinhLuong();
+                        do {
+                            System.out.print("** Nhập mã nhân viên muốn xem: ");
+                            maNhanVien = CauHinh.sc.nextLine();
+                            if (danhSachNhanVien.timNhanVien(maNhanVien) == null) {
+                                System.out.println("Nhân viên không tồn tại, nhập lại!");
+                            }
+                        } while (danhSachNhanVien.timNhanVien(maNhanVien) == null);
+                        System.out.printf("Tiền lương của nhân viên %s là: %.1f VNĐ\n", danhSachNhanVien.timNhanVien(maNhanVien).getHoTen(),
+                                danhSachNhanVien.timNhanVien(maNhanVien).tinhLuong());
                         break;
                 }
             } else {

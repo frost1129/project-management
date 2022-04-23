@@ -137,6 +137,15 @@ public class QuanLyNhanVien {
         return null;
     }
 
+    public boolean tonTaiNhanVien(String maNhanVien) {
+        for(NhanVien nhanVien : danhSachNhanVien) {
+            if (nhanVien.getMaNhanVien().equals(maNhanVien)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Tìm nhân viên theo họ tên và ngày sinh và phòng ban
      * @param hoTen

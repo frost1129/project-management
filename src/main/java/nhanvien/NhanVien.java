@@ -11,8 +11,7 @@ public abstract class NhanVien {
     private static int dem = 0;
     /**
      * Quy ước
-     * NhanVienBinhThuong: 000
-     * NhanVienQuanLy: 001
+     * NhanVienBinhThuong: 001
      * LapTrinhVien: 002
      * ThietKeVien: 003
      * KiemThuVien: 004
@@ -93,12 +92,16 @@ public abstract class NhanVien {
      * Xem danh sách dự án mà nhân viên này tham gia
      */
     public void danhSachDuAnThamGia() {
-        System.out.printf("Danh sách dự án tham gia của %s\n", this.hoTen);
-        for (DuAn duAn: danhSachDuAnThamGia) {
-            System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %s\nNgày kết thúc: %s" +
-                    "\nTổng kinh phí: %f\nChủ nhiệm dự án: %s\n\n", duAn.getMaDuAn(), duAn.getTenDuAn(),
-                    CauHinh.f.format(duAn.getNgayBatDau()), CauHinh.f.format(duAn.getNgayKetThuc()), duAn.getTongKinhPhi(),
-                    duAn.getChuNhiemDuAn().getHoTen());
+        if (this.danhSachDuAnThamGia.isEmpty()) {
+            System.out.println("Danh sách rỗng!");
+        } else {
+            System.out.printf("Danh sách dự án tham gia của %s\n", this.hoTen);
+            for (DuAn duAn : danhSachDuAnThamGia) {
+                System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %s\nNgày kết thúc: %s" +
+                                "\nTổng kinh phí: %f\nChủ nhiệm dự án: %s\n\n", duAn.getMaDuAn(), duAn.getTenDuAn(),
+                        CauHinh.f.format(duAn.getNgayBatDau()), CauHinh.f.format(duAn.getNgayKetThuc()), duAn.getTongKinhPhi(),
+                        duAn.getChuNhiemDuAn().getHoTen());
+            }
         }
     }
 
@@ -134,6 +137,15 @@ public abstract class NhanVien {
         for(DuAn duAn: danhSachDuAnThamGia) {
             if (duAn.getMaDuAn() == maDuAn) {
                 danhSachDuAnThamGia.remove(duAn);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean tonTaiDuAnThamGia(int maDuAn) {
+        for(DuAn duAn: danhSachDuAnThamGia) {
+            if (duAn.getMaDuAn() == maDuAn) {
                 return true;
             }
         }
