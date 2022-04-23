@@ -8,7 +8,7 @@ public class NhanVienBinhThuong extends NhanVien {
     {
         super.setMaNhanVien("000" + super.getMaNhanVien());
     }
-
+    public NhanVienBinhThuong() {};
     public NhanVienBinhThuong(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                        double heSoLuong, double luongCoBan) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);

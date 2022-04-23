@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class QuanLyNhanVien {
     private static List<NhanVien> danhSachNhanVien = new ArrayList<>();
 
+    /**
+     * Thêm dữ liệu từ file
+     */
     static {
         String url = "src/main/resources/danhsachnhanvien.txt";
         File file = new File(url);
@@ -24,12 +27,16 @@ public class QuanLyNhanVien {
 
                 String loaiNhanVien = sf.nextLine();
                 String hoTen = sf.nextLine();
+
                 Date d = CauHinh.f.parse(sf.nextLine());
-                CauHinh.c.set(d.getYear(), d.getMonth(), d.getDay());
+                Calendar ngaySinh = new GregorianCalendar();
+                ngaySinh.setTime(d);
+
                 String email = sf.nextLine();
                 String gioiTinh = sf.nextLine();
                 PhongBan phongBan = new PhongBan();
                 phongBan.setMaPhongBan(Integer.parseInt(sf.nextLine()));
+
                 double heSoLuong = Double.parseDouble(sf.nextLine());
                 double luongCoBan = Double.parseDouble(sf.nextLine());
 
@@ -37,31 +44,31 @@ public class QuanLyNhanVien {
                 switch (loaiNhanVien) {
                     case "000" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
-                        nhanVien = new NhanVienBinhThuong(hoTen, CauHinh.c, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+                        nhanVien = new NhanVienBinhThuong(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "001" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
-                        nhanVien = new NhanVienQuanLy(hoTen, CauHinh.c, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+                        nhanVien = new NhanVienQuanLy(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "002" -> {
                         double luongOverTime = Double.parseDouble(sf.nextLine());
-                        nhanVien = new LapTrinhVien(hoTen, CauHinh.c, email, gioiTinh, phongBan, heSoLuong, luongCoBan, luongOverTime);
+                        nhanVien = new LapTrinhVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, luongOverTime);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "003" -> {
                         double bonus = Double.parseDouble(sf.nextLine());
-                        nhanVien = new ThietKeVien(hoTen, CauHinh.c, email, gioiTinh, phongBan, heSoLuong, luongCoBan, bonus);
+                        nhanVien = new ThietKeVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, bonus);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "004" -> {
                         int loiPhatHien = Integer.parseInt(sf.nextLine());
-                        nhanVien = new KiemThuVien(hoTen, CauHinh.c, email, gioiTinh, phongBan, heSoLuong, luongCoBan, loiPhatHien);
+                        nhanVien = new KiemThuVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, loiPhatHien);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
@@ -85,16 +92,11 @@ public class QuanLyNhanVien {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public void themNhanVien(String loaiNhanVien, List<PhongBan> danhSachPhongBan, int maPhongBan) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void themNhanVien(String loaiNhanVien, List<PhongBan> danhSachPhongBan, int maPhongBan) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ParseException {
         Class c = Class.forName(loaiNhanVien);
         NhanVien nv = (NhanVien) c.getConstructor().newInstance();
         nv.nhapThongTin();
-        if (nv.nhapPhongBanTrucThuoc(danhSachPhongBan, maPhongBan)) {
-            danhSachNhanVien.add(nv);
-            System.out.println("Thêm nhân viên thành công!");
-        } else {
-            System.out.println("Thêm nhân viên thất bại! Phòng ban không tồn tại");
-        }
+        nv.nhapPhongBanTrucThuoc(danhSachPhongBan, maPhongBan);
     }
 
     /**

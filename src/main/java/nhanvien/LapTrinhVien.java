@@ -10,6 +10,7 @@ public class LapTrinhVien extends NhanVien {
     {
         super.setMaNhanVien("002" + super.getMaNhanVien());
     }
+    public LapTrinhVien() {};
 
     public LapTrinhVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                        double heSoLuong, double luongCoBan, double luongOvertime) {

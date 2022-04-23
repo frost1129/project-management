@@ -11,6 +11,8 @@ public class ThietKeVien extends NhanVien {
         super.setMaNhanVien("003" + super.getMaNhanVien());
     }
 
+    public ThietKeVien() {};
+
     public ThietKeVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                        double heSoLuong, double luongCoBan, double bonus) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);

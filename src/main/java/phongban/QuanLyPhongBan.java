@@ -36,11 +36,25 @@ public class QuanLyPhongBan {
         }
     }
 
+    /**
+     * Hàm tìm xem phòng ban có tồn tại hay không thông qua mã phòng ban
+     * @param maPhongBan
+     * @return true nếu tìm thấy, ngược lại false
+     */
+    public boolean tonTaiPhongBan(int maPhongBan) {
+        for (PhongBan phongBan: danhSachPhongBan) {
+            if (phongBan.getMaPhongBan() == maPhongBan) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static List<PhongBan> getDanhSachPhongBan() {
         return danhSachPhongBan;
     }
 
-    public static void setDanhSachPhongBan(List<PhongBan> danhSachPhongBan) {
+    public void setDanhSachPhongBan(List<PhongBan> danhSachPhongBan) {
         QuanLyPhongBan.danhSachPhongBan = danhSachPhongBan;
     }
 }

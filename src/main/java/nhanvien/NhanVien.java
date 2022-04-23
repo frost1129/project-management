@@ -4,9 +4,8 @@ import duan.DuAn;
 import phongban.PhongBan;
 import dungchung.CauHinh;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
 
 public abstract class NhanVien {
     private static int dem = 0;
@@ -19,7 +18,7 @@ public abstract class NhanVien {
      * KiemThuVien: 004
      */
     private String maNhanVien = String.format("%05d", ++dem);
-    private Calendar ngaySinh;
+    private Calendar ngaySinh = new GregorianCalendar();
     private String hoTen;
     private String email;
     private String gioiTinh;
@@ -29,6 +28,10 @@ public abstract class NhanVien {
     private List<DuAn> danhSachDuAnThamGia = new ArrayList<>();
 
     //Phương thức khởi tạo
+
+    /**
+     * Phương thức khởi tạo không tham số này dùng cho phương thức themNhanVien ở class QuanLyNhanVien
+     */
     public NhanVien() {};
 
     public NhanVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
@@ -45,7 +48,7 @@ public abstract class NhanVien {
     /**
      * Nhập thông tin nhân viên từ bàn phím
      */
-    public void nhapThongTin() {
+    public void nhapThongTin() throws ParseException {
         System.out.print("Nhập họ và tên: ");
         this.hoTen = CauHinh.sc.nextLine();
 
@@ -56,7 +59,8 @@ public abstract class NhanVien {
         int thang = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("Nhập năm: ");
         int nam = Integer.parseInt(CauHinh.sc.nextLine());
-        this.ngaySinh.set(nam, thang, ngay);
+        Date d = CauHinh.f.parse(ngay + "/" + thang + "/" + nam);
+        this.ngaySinh.setTime(d);
 
         System.out.print("Nhập email: ");
         this.setEmail(CauHinh.sc.nextLine());
@@ -65,10 +69,10 @@ public abstract class NhanVien {
         this.gioiTinh = CauHinh.sc.nextLine();
 
         System.out.print("Nhập hệ số lương: ");
-        this.heSoLuong = Integer.parseInt(CauHinh.sc.nextLine());
+        this.heSoLuong = Double.parseDouble(CauHinh.sc.nextLine());
 
         System.out.print("Nhập lương cơ bản: ");
-        this.luongCoBan = Integer.parseInt(CauHinh.sc.nextLine());
+        this.luongCoBan = Double.parseDouble(CauHinh.sc.nextLine());
     }
 
     /**
@@ -77,6 +81,7 @@ public abstract class NhanVien {
     public void xemThongTin() {
         System.out.printf("Mã nhân viên: %s\n", this.getMaNhanVien());
         System.out.printf("Họ và tên: %s\n", this.hoTen);
+        System.out.printf("Ngày sinh: %s/%s/%s\n", this.ngaySinh.get(Calendar.DATE), this.ngaySinh.get(Calendar.MONTH) + 1, this.ngaySinh.get(Calendar.YEAR));
         System.out.printf("Email: %s\n", this.email);
         System.out.printf("Giới tính: %s\n", this.gioiTinh);
         System.out.printf("Hệ số lương: %.1f\n", this.heSoLuong);
@@ -103,14 +108,13 @@ public abstract class NhanVien {
      * @param maPhongBan
      * @return true nếu thêm thành công, ngược lại false
      */
-    public boolean nhapPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
+    public void nhapPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
         for (PhongBan pb : ds) {
             if (pb.getMaPhongBan() == maPhongBan) {
                 this.phongBan = pb;
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     /**

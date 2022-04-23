@@ -9,6 +9,7 @@ public class KiemThuVien extends NhanVien {
     {
         super.setMaNhanVien("004" + super.getMaNhanVien());
     }
+    public KiemThuVien() {};
 
     public KiemThuVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                        double heSoLuong, double luongCoBan, int soLoiPhatHien) {

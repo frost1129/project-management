@@ -4,13 +4,14 @@ import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 
 public class Main {
     public static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
     public static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
     public static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
 
-    public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         //Khai báo biến
         int luaChonChinh;
         QuanLyNhanVien danhSachNhanVien;
@@ -49,7 +50,7 @@ public class Main {
     }
 
     //Hàm in menu các chức năng của nhân viên
-    public static void menuNhanVien () throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void menuNhanVien () throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         int luaChon;
         while (true) {
             System.out.print("--- CHỨC NĂNG NHÂN VIÊN ---" +
@@ -69,40 +70,47 @@ public class Main {
             } else if (luaChon >= 1 && luaChon <= 7) {
                 switch (luaChon) {
                     case 1:
+                        //Lựa chọn tạo loại nhân viên
                         int luaChonNhanVien;
                         do {
                             System.out.print("* 1. Nhân viên bình thường" +
-                                    "\n* 2. Nhân viên quản lý" +
-                                    "\n* 3. Lập trình viên" +
-                                    "\n* 4. Thiết kế viên" +
-                                    "\n* 5. Kiểm thử viên" +
-                                    "\n Nhập lựa chọn (1 - 5): ");
+                                    "\n* 2. Lập trình viên" +
+                                    "\n* 3. Thiết kế viên" +
+                                    "\n* 4. Kiểm thử viên" +
+                                    "\n Nhập lựa chọn (1 - 4): ");
                             luaChonNhanVien = Integer.parseInt(CauHinh.sc.nextLine());
-                        } while (luaChonNhanVien < 1 || luaChonNhanVien > 5);
-                        System.out.print("** Nhập mã phòng ban cho nhân viên mới: ");
-                        int maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+                        } while (luaChonNhanVien < 1 || luaChonNhanVien > 4);
+
+                        //Kiểm tra tồn tại dữ liệu phòng ban
+                        int maPhongBan;
+                        do {
+                            System.out.print("** Nhập mã phòng ban cho nhân viên mới: ");
+                            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+                            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
+                                System.out.println("Phòng ban không tồn tại, nhập lại!");
+                            }
+                        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
+
+                        //Case thực thi tạo loại nhân viên
                         switch (luaChonNhanVien) {
                             case 1:
                                 danhSachNhanVien.themNhanVien("nhanvien.NhanVienBinhThuong",
-                                        danhSachPhongBan.getDanhSachPhongBan(), maPhongBan);
+                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
                                 break;
                             case 2:
-                                danhSachNhanVien.themNhanVien("nhanvien.NhanVienQuanLy",
-                                        danhSachPhongBan.getDanhSachPhongBan(), maPhongBan);
+                                danhSachNhanVien.themNhanVien("nhanvien.LapTrinhVien",
+                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
                                 break;
                             case 3:
-                                danhSachNhanVien.themNhanVien("nhanvien.LapTrinhVien",
-                                        danhSachPhongBan.getDanhSachPhongBan(), maPhongBan);
+                                danhSachNhanVien.themNhanVien("nhanvien.ThietKeVien",
+                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
                                 break;
                             case 4:
-                                danhSachNhanVien.themNhanVien("nhanvien.ThietKeVien",
-                                        danhSachPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
-                            case 5:
                                 danhSachNhanVien.themNhanVien("nhanvien.KiemThuVien",
-                                        danhSachPhongBan.getDanhSachPhongBan(), maPhongBan);
+                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
                                 break;
                         }
+                        break;
                     case 2:
                         danhSachNhanVien.xemDanhSachNhanVien();
                         break;
