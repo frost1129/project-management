@@ -99,7 +99,6 @@ public class QuanLyNhanVien {
     /**
      * Thêm 1 nhân viên bất kì
      * @param danhSachPhongBan
-     * @throws ClassNotFoundException
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
      * @throws InstantiationException
@@ -162,7 +161,7 @@ public class QuanLyNhanVien {
      */
     public void xemDanhSachDuAnThamGia(String maNhanVien) {
         danhSachNhanVien.forEach(nhanVien -> {
-            if (nhanVien.getMaNhanVien() == maNhanVien) {
+            if (nhanVien.getMaNhanVien().equals(maNhanVien)) {
                 nhanVien.danhSachDuAnThamGia();
                 System.out.println();
             }
@@ -210,7 +209,6 @@ public class QuanLyNhanVien {
 
     /**
      * Hàm tìm các nhân viên thỏa điều kiện tìm
-     * @return danh sách nhân viên thỏa điều kiện
      * @throws ParseException
      */
     public void timNhanVien() throws ParseException {
@@ -252,7 +250,6 @@ public class QuanLyNhanVien {
                 ds.forEach(duAn -> {
                     if (duAn.getMaDuAn() == maDuAn && nhanVien.xoaDuAnThamGia(maDuAn)) {
                         System.out.println("Xóa dự án thành công!");
-                        return;
                     }
                 });
             }
