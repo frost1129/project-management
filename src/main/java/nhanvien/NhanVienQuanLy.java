@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NhanVienQuanLy extends NhanVien {
     private final List<Calendar> ngayNhamChuc = new ArrayList<>();
-    private final List<PhongBan> phongBanQuanLy = new ArrayList<>();
+    private final List<Integer> phongBanQuanLy = new ArrayList<>();
 
     {
         super.setMaNhanVien("000" + super.getMaNhanVien());
@@ -33,11 +33,11 @@ public class NhanVienQuanLy extends NhanVien {
         this.ngayNhamChuc.add(ngayNhamChuc);
     }
 
-    public List<PhongBan> getPhongBanQuanLy() {
+    public List<Integer> getPhongBanQuanLy() {
         return phongBanQuanLy;
     }
 
-    public void setPhongBanQuanLy(PhongBan phongBan) {
-        this.phongBanQuanLy.add(phongBan);
+    public void setPhongBanQuanLy(int maPhongBan) {
+        this.phongBanQuanLy.add(maPhongBan);
     }
 }

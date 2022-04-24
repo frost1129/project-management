@@ -38,9 +38,11 @@ public class QuanLyPhongBan {
                 String maNhanVienQuanLy = sf.nextLine();
                 CauHinh.c.setTime(CauHinh.f.parse(sf.nextLine()));
                 phongBan.setNgayQuanLyNhamChuc(CauHinh.c);
+
                 NhanVienQuanLy nv = new NhanVienQuanLy();
                 nv.setMaNhanVien(maNhanVienQuanLy);
                 nv.setNgayNhamChuc(CauHinh.c);
+                nv.setPhongBanQuanLy(maPhongBan);
 
                 phongBan.setNhanVienQuanLy(nv);
                 sf.nextLine(); //Bỏ qua kí tự "#"
