@@ -11,6 +11,7 @@ public abstract class NhanVien {
     private static int dem = 0;
     /**
      * Quy ước
+     * NhanVienQuanLy: 000
      * NhanVienBinhThuong: 001
      * LapTrinhVien: 002
      * ThietKeVien: 003

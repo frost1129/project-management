@@ -11,7 +11,7 @@ public class NhanVienQuanLy extends NhanVien {
     private final List<PhongBan> phongBanQuanLy = new ArrayList<>();
 
     {
-        super.setMaNhanVien("001" + super.getMaNhanVien());
+        super.setMaNhanVien("000" + super.getMaNhanVien());
     }
     public NhanVienQuanLy() {};
 
@@ -19,7 +19,6 @@ public class NhanVienQuanLy extends NhanVien {
                        double heSoLuong, double luongCoBan) {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
     }
-
 
     @Override
     public double tinhLuong() {

@@ -48,3 +48,43 @@ Nữ
 3000000
 4
 #
+000
+Dương Thái Phát
+03/01/2002
+thaiphat@gmail.com
+Nam
+1
+3.7
+4000000
+-1
+#
+000
+Nguyễn Khánh Vy
+09/02/2001
+khanhvy@gmail.com
+Nữ
+2
+2.8
+2500000
+-1
+#
+000
+Thái Ngọc Trâm
+06/06/2002
+ngoctram@gmail.com
+Nữ
+3
+3.0
+3000000
+-1
+#
+000
+Lê Gia Hưng
+03/04/2001
+giahung@gmail.com
+Nam
+4
+3.5
+3500000
+-1
+#

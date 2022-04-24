@@ -3,52 +3,34 @@ package phongban;
 import dungchung.CauHinh;
 import nhanvien.NhanVien;
 import nhanvien.NhanVienQuanLy;
+import nhanvien.QuanLyNhanVien;
 
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PhongBan {
     private int maPhongBan;
     private String tenPhongBan;
-    private NhanVienQuanLy nhanVienQuanLy;
+    private NhanVien nhanVienQuanLy = new NhanVienQuanLy();
     private List<NhanVien> danhSachNhanVienTrucThuoc = new ArrayList<>();
 
     public PhongBan() {};
 
     /**
      * Hàm thêm nhân viên quản lý cho phòng ban này
-     * @param ds
-     * @param maNhanVien
      */
-    public void nhapNhanVienQuanLy(List<NhanVien> ds, String maNhanVien) {
-        ds.forEach(nhanVien -> {
-            if (nhanVien.getMaNhanVien().equals(maNhanVien)) {
-                this.nhanVienQuanLy = (NhanVienQuanLy) nhanVien;
-                System.out.println("Nhập thời gian nhậm chức: ");
-                System.out.print("Nhập ngày: ");
-                int ngay = Integer.parseInt(CauHinh.sc.nextLine());
-                System.out.print("Nhập tháng: ");
-                int thang = Integer.parseInt(CauHinh.sc.nextLine());
-                System.out.print("Nhập năm: ");
-                int nam = Integer.parseInt(CauHinh.sc.nextLine());
-                try {
-                    CauHinh.d = CauHinh.f.parse(ngay + "/" + thang + "/" + nam);
-                    CauHinh.c.setTime(CauHinh.d);
-                    this.nhanVienQuanLy.setNgayNhamChuc(CauHinh.c);
+    public void themNhanVienQuanLy(NhanVien nhanVienQuanLy) {
+        this.setNhanVienQuanLy((NhanVienQuanLy) nhanVienQuanLy);
+    }
 
-                    PhongBan phongBanQuanLy = new PhongBan();
-                    phongBanQuanLy.setMaPhongBan(this.maPhongBan);
-                    phongBanQuanLy.setTenPhongBan(this.tenPhongBan);
-                    phongBanQuanLy.setNhanVienQuanLy(this.nhanVienQuanLy);
-                    phongBanQuanLy.setDanhSachNhanVienTrucThuoc(this.danhSachNhanVienTrucThuoc);
-                    this.nhanVienQuanLy.setPhongBanQuanLy(phongBanQuanLy);
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    /**
+     * Hàm xem thông tin của 1 phòng ban
+     */
+    public void xemThongTin() {
+        System.out.printf("Mã phòng ban: %d" +
+                "\nTên phòng ban: %s" +
+                "\nNhân viên quản lý: %s\n", this.maPhongBan, this.tenPhongBan, this.nhanVienQuanLy.getMaNhanVien());
     }
 
     //Các setter và getter

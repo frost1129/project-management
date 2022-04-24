@@ -24,7 +24,19 @@ public class QuanLyNhanVien {
         try {
             Scanner sf = new Scanner(file);
             while (sf.hasNextLine()) {
-
+                /**
+                 * Chú thích dữ liệu trong file
+                 * Dòng 1: Mã loại nhân viên
+                 * Dòng 2: Họ tên nhân viên
+                 * Dòng 3: Ngày sinh
+                 * Dòng 4: Email
+                 * Dòng 5: Giới tính
+                 * Dòng 6: Phòng ban trực thuộc
+                 * Dòng 7: Hệ số lương
+                 * Dòng 8: Lương cơ bản
+                 * Dòng 9 (Trừ nhân viên quản lý với nhân viên bình thường): Lương thưởng thêm / số lỗi phát hiện
+                 * Dòng 10: Kí tự "#" ngăn cách dữ liệu
+                 */
                 String loaiNhanVien = sf.nextLine();
                 String hoTen = sf.nextLine();
 
@@ -44,13 +56,13 @@ public class QuanLyNhanVien {
                 switch (loaiNhanVien) {
                     case "000" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
-                        nhanVien = new NhanVienBinhThuong(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+                        nhanVien = new NhanVienQuanLy(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "001" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
-                        nhanVien = new NhanVienQuanLy(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
+                        nhanVien = new NhanVienBinhThuong(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
                         nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
@@ -155,7 +167,10 @@ public class QuanLyNhanVien {
      */
     public List<NhanVien> timNhanVien(String hoTen, Calendar ngaySinh, String tenPhongBan) {
         return danhSachNhanVien.stream().filter(nhanVien ->
-                nhanVien.getHoTen().equals(hoTen) && nhanVien.getNgaySinh() == ngaySinh &&
+                nhanVien.getHoTen().equals(hoTen) &&
+                        (nhanVien.getNgaySinh().get(Calendar.DATE) == ngaySinh.get(Calendar.DATE) &&
+                                nhanVien.getNgaySinh().get(Calendar.MONTH) == ngaySinh.get(Calendar.MONTH) &&
+                                nhanVien.getNgaySinh().get(Calendar.YEAR) == ngaySinh.get(Calendar.YEAR)) &&
                         nhanVien.getPhongBan().getTenPhongBan().equals(tenPhongBan)).collect(Collectors.toList());
     }
 

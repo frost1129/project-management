@@ -1,6 +1,7 @@
 import duan.QuanLyDuAn;
 import dungchung.CauHinh;
 import nhanvien.NhanVien;
+import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
@@ -15,7 +16,6 @@ public class Main {
     public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         //Khai báo biến
         int luaChonChinh;
-        QuanLyNhanVien danhSachNhanVien;
 
         while (true) {
             menuChinh();
@@ -24,14 +24,16 @@ public class Main {
                 System.out.println("Thoát chương trình...");
                 break;
             } else if (luaChonChinh >= 1 && luaChonChinh <= 3) {
-                int luaChonPhu;
                 switch (luaChonChinh) {
                     case 1:
                         menuNhanVien();
                         break;
                     case 2:
+                        menuPhongBan();
                         break;
                     case 3:
+                        menuDuAn();
+                        break;
 
                 }
             } else {
@@ -44,12 +46,11 @@ public class Main {
     public static void menuChinh () {
         System.out.print("--- DANH SÁCH CHỨC NĂNG ---" +
                 "\n1. Nhân viên" +
-                "\n2. Dự án" +
-                "\n3. Phòng ban" +
+                "\n2. Phòng ban" +
+                "\n3. Dự án" +
                 "\n0. Thoát chương trình" +
                 "\nNhập lựa chọn (0 - 3): ");
     }
-
     //Hàm in menu các chức năng của nhân viên
     public static void menuNhanVien () throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         int luaChon;
@@ -74,7 +75,8 @@ public class Main {
                         //Lựa chọn tạo loại nhân viên
                         int luaChonNhanVien;
                         do {
-                            System.out.print("* 1. Nhân viên bình thường" +
+                            System.out.print("* 0. Nhân viên quản lý" +
+                                    "\n* 1. Nhân viên bình thường" +
                                     "\n* 2. Lập trình viên" +
                                     "\n* 3. Thiết kế viên" +
                                     "\n* 4. Kiểm thử viên" +
@@ -94,6 +96,10 @@ public class Main {
 
                         //Case thực thi tạo loại nhân viên
                         switch (luaChonNhanVien) {
+                            case 0:
+                                danhSachNhanVien.themNhanVien("nhanvien.NhanVienQuanLy",
+                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
+                                break;
                             case 1:
                                 danhSachNhanVien.themNhanVien("nhanvien.NhanVienBinhThuong",
                                         QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
@@ -233,13 +239,54 @@ public class Main {
                 "\nNhập lựa chọn (0 - 8): ");
     }
     //Hàm in menu các chức năng của phòng ban
-    public static void menuPhongBan () {
-        System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
-                "\n1. Thêm 1 phòng ban" +
-                "\n2. Sửa 1 phòng ban" +
-                "\n3. Xóa 1 phòng ban" +
-                "\n4. Xem danh sách phòng ban" +
-                "\n0. Thoát menu phòng ban" +
-                "\nNhập lựa chọn (0 - 4): ");
+    public static void menuPhongBan () throws ParseException {
+        int luaChon;
+        while (true) {
+            System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
+                    "\n1. Xem danh sách phòng ban" +
+                    "\n2. Thêm quản lý cho phòng ban" +
+                    "\n0. Thoát menu phòng ban" +
+                    "\nNhập lựa chọn (0 - 2): ");
+            luaChon = Integer.parseInt(CauHinh.sc.nextLine());
+            if (luaChon == 0) {
+                System.out.println("* Thoát menu phòng ban...");
+                break;
+            } else if (luaChon == 1) {
+                System.out.println("========== DANH SÁCH PHÒNG BAN ==========");
+                danhSachPhongBan.xemDanhSachPhongBan();
+            } else if (luaChon == 2) {
+                String maNhanVien;
+                int maPhongBan;
+                do {
+                    System.out.print("* Nhập mã phòng ban: ");
+                    maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+                    if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
+                        System.out.println("* Mã phòng ban không tồn tại!");
+                    }
+                } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
+
+                do {
+                    System.out.print("* Nhập mã nhân viên quản lý: ");
+                    maNhanVien = CauHinh.sc.nextLine();
+                    if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
+                        System.out.println("* Mã nhân viên không hợp lệ!");
+                    }
+                } while (!danhSachNhanVien.tonTaiNhanVien(maNhanVien));
+
+                //Kiểm tra nhân viên có vượt quá số lượng phòng ban được quản lý hay không?
+                System.out.print("* Nhập thời gian nhậm chức: " +
+                        "\n* Nhập ngày: ");
+                int ngay = Integer.parseInt(CauHinh.sc.nextLine());
+                System.out.print("* Nhập tháng: ");
+                int thang = Integer.parseInt(CauHinh.sc.nextLine());
+                System.out.print("* Nhập năm: ");
+                int nam = Integer.parseInt(CauHinh.sc.nextLine());
+                CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+                ((NhanVienQuanLy) danhSachNhanVien.timNhanVien(maNhanVien)).setNgayNhamChuc(CauHinh.c);
+                ((NhanVienQuanLy) danhSachNhanVien.timNhanVien(maNhanVien)).setPhongBanQuanLy(danhSachPhongBan.timPhongBan(maPhongBan));
+                danhSachPhongBan.timPhongBan(maPhongBan).themNhanVienQuanLy(danhSachNhanVien.timNhanVien(maNhanVien));
+                System.out.println("* Thêm quản lý thành công!");
+            }
+        }
     }
 }
