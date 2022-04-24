@@ -1,7 +1,6 @@
 import duan.QuanLyDuAn;
 import dungchung.CauHinh;
 import nhanvien.NhanVien;
-import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
@@ -26,16 +25,9 @@ public class Main {
                 break;
             } else if (luaChonChinh >= 1 && luaChonChinh <= 3) {
                 switch (luaChonChinh) {
-                    case 1:
-                        menuNhanVien();
-                        break;
-                    case 2:
-                        menuPhongBan();
-                        break;
-                    case 3:
-                        menuDuAn();
-                        break;
-
+                    case 1 -> menuNhanVien();
+                    case 2 -> menuPhongBan();
+                    case 3 -> menuDuAn();
                 }
             } else {
                 System.out.println("Lựa chọn không hợp lệ!");
@@ -97,26 +89,16 @@ public class Main {
 
                         //Case thực thi tạo loại nhân viên
                         switch (luaChonNhanVien) {
-                            case 0:
-                                danhSachNhanVien.themNhanVien("nhanvien.NhanVienQuanLy",
-                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
-                            case 1:
-                                danhSachNhanVien.themNhanVien("nhanvien.NhanVienBinhThuong",
-                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
-                            case 2:
-                                danhSachNhanVien.themNhanVien("nhanvien.LapTrinhVien",
-                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
-                            case 3:
-                                danhSachNhanVien.themNhanVien("nhanvien.ThietKeVien",
-                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
-                            case 4:
-                                danhSachNhanVien.themNhanVien("nhanvien.KiemThuVien",
-                                        QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
-                                break;
+                            case 0 -> danhSachNhanVien.themNhanVien("nhanvien.NhanVienQuanLy",
+                                    QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
+                            case 1 -> danhSachNhanVien.themNhanVien("nhanvien.NhanVienBinhThuong",
+                                    QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
+                            case 2 -> danhSachNhanVien.themNhanVien("nhanvien.LapTrinhVien",
+                                    QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
+                            case 3 -> danhSachNhanVien.themNhanVien("nhanvien.ThietKeVien",
+                                    QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
+                            case 4 -> danhSachNhanVien.themNhanVien("nhanvien.KiemThuVien",
+                                    QuanLyPhongBan.getDanhSachPhongBan(), maPhongBan);
                         }
                         break;
                     case 2:
@@ -226,7 +208,7 @@ public class Main {
         }
     }
     //Hàm in menu các chức năng của phòng ban
-    public static void menuPhongBan () throws ParseException {
+    public static void menuPhongBan () {
         int luaChon;
         while (true) {
             System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
@@ -261,46 +243,10 @@ public class Main {
                         System.out.println();
                         break;
                     case 3:
-                        do {
-                            System.out.print("* Nhập mã phòng ban: ");
-                            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
-                            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
-                                System.out.println("* Mã phòng ban không tồn tại!");
-                            }
-                        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
-
-                        String maNhanVien;
-                        while (true) {
-                            do {
-                                System.out.print("Nhập mã nhân viên muốn thêm: ");
-                                maNhanVien = CauHinh.sc.nextLine();
-                                if (danhSachPhongBan.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().contains(danhSachNhanVien.timNhanVien(maNhanVien))) {
-                                    System.out.println("* Nhân viên này đã tồn tại trong phòng ban, nhập lại!");
-                                } if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
-                                    System.out.println("* Mã nhân viên không tồn tại, nhập lại!");
-                                }
-                            } while (danhSachPhongBan.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().contains(danhSachNhanVien.timNhanVien(maNhanVien)) ||
-                                    !danhSachNhanVien.tonTaiNhanVien(maNhanVien));
-                            danhSachPhongBan.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().add(danhSachNhanVien.timNhanVien(maNhanVien));
-                            System.out.print("* Thêm thành công! Tiếp tục (No - 0 / Yes - 1): ");
-                            if (Integer.parseInt(CauHinh.sc.nextLine()) == 0) {
-                                break;
-                            }
-                        }
+                        danhSachPhongBan.themNhanVienVaoPhongBan(danhSachNhanVien);
                         break;
                     case 4:
-                        do {
-                            System.out.print("* Nhập mã phòng ban: ");
-                            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
-                            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
-                                System.out.println("* Mã phòng ban không tồn tại!");
-                            }
-                        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
-                        System.out.printf("========== DANH SÁCH NHÂN VIÊN CỦA %s ===========\n", danhSachPhongBan.timPhongBan(maPhongBan).getTenPhongBan());
-                        danhSachPhongBan.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().forEach(nhanVien -> {
-                            int dem = 0;
-                            System.out.printf("%d. %s - %s\n", ++dem, nhanVien.getMaNhanVien(), nhanVien.getHoTen());
-                        });
+                        danhSachPhongBan.xemDanhSachThanhVienCuaPhongBan();
                         System.out.println();
                         break;
                 }

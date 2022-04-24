@@ -111,6 +111,7 @@ public class QuanLyNhanVien {
         NhanVien nv = (NhanVien) c.getConstructor().newInstance();
         nv.nhapThongTin();
         nv.hoanThienThongTinPhongBanTrucThuoc(danhSachPhongBan, maPhongBan);
+        danhSachNhanVien.add(nv);
     }
 
     /**

@@ -13,7 +13,7 @@ public class NhanVienQuanLy extends NhanVien {
     {
         super.setMaNhanVien("000" + super.getMaNhanVien());
     }
-    public NhanVienQuanLy() {};
+    public NhanVienQuanLy() {}
 
     public NhanVienQuanLy(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                        double heSoLuong, double luongCoBan) {

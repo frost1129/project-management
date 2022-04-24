@@ -1,6 +1,7 @@
 package phongban;
 
 import dungchung.CauHinh;
+import nhanvien.NhanVien;
 import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
 
@@ -8,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -88,12 +88,66 @@ public class QuanLyPhongBan {
     }
 
     /**
+     * Hàm xem danh sách nhân viên của 1 phòng ban
+     */
+    public void xemDanhSachThanhVienCuaPhongBan() {
+        int maPhongBan;
+        do {
+            System.out.print("* Nhập mã phòng ban: ");
+            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!this.tonTaiPhongBan(maPhongBan)) {
+                System.out.println("* Mã phòng ban không tồn tại!");
+            }
+        } while (!this.tonTaiPhongBan(maPhongBan));
+        System.out.printf("========== DANH SÁCH NHÂN VIÊN CỦA %s ===========\n", this.timPhongBan(maPhongBan).getTenPhongBan());
+
+        int finalMaPhongBan = maPhongBan;
+        danhSachPhongBan.forEach(phongBan -> {
+            if (phongBan.getMaPhongBan() == finalMaPhongBan) {
+                phongBan.getDanhSachNhanVienTrucThuoc().forEach(nhanVien -> {
+                    int dem = 0;
+                    System.out.printf("%d. %s - %s\n", ++dem, nhanVien.getMaNhanVien(), nhanVien.getHoTen());
+                });
+            }
+        });
+    }
+
+    /**
+     * Hàm thêm 1 nhân viên vào phòng ban
+     */
+    public void themNhanVienVaoPhongBan(QuanLyNhanVien ds) {
+        int maPhongBan;
+        do {
+            System.out.print("* Nhập mã phòng ban: ");
+            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!this.tonTaiPhongBan(maPhongBan)) {
+                System.out.println("* Mã phòng ban không tồn tại!");
+            }
+        } while (!this.tonTaiPhongBan(maPhongBan));
+
+        String maNhanVien;
+        do {
+            do {
+                System.out.print("Nhập mã nhân viên muốn thêm: ");
+                maNhanVien = CauHinh.sc.nextLine();
+                if (this.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().contains(ds.timNhanVien(maNhanVien))) {
+                    System.out.println("* Nhân viên này đã tồn tại trong phòng ban, nhập lại!");
+                }
+                if (!ds.tonTaiNhanVien(maNhanVien)) {
+                    System.out.println("* Mã nhân viên không tồn tại, nhập lại!");
+                }
+            } while (this.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().contains(ds.timNhanVien(maNhanVien)) ||
+                    !ds.tonTaiNhanVien(maNhanVien));
+            this.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().add(ds.timNhanVien(maNhanVien));
+            System.out.print("* Thêm thành công! Tiếp tục (No - 0 / Yes - 1): ");
+        } while (Integer.parseInt(CauHinh.sc.nextLine()) != 0);
+    }
+
+    /**
      * Đồng bộ hóa dữ liệu từ các danh sách quản lý liên quan khác
      */
     public void hoanThienThongTinPhongBan() {
-        danhSachPhongBan.forEach(phongBan -> {
-            phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien());
-        });
+        danhSachPhongBan.forEach(phongBan -> phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien()));
     }
 
     public static List<PhongBan> getDanhSachPhongBan() {

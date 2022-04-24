@@ -14,7 +14,7 @@ public class PhongBan {
     private Calendar ngayQuanLyNhamChuc;
     private List<NhanVien> danhSachNhanVienTrucThuoc = new ArrayList<>();
 
-    public PhongBan() {};
+    public PhongBan() {}
 
     /**
      * Hàm hoàn thiện thông tin thuộc tính nhanVienQuanLy
