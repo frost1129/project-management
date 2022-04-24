@@ -225,22 +225,10 @@ public class Main {
             } else if (luaChon >= 1 && luaChon <= 4) {
                 switch (luaChon) {
                     case 1:
-                        System.out.println("========== DANH SÁCH PHÒNG BAN ==========");
                         danhSachPhongBan.xemDanhSachPhongBan();
                         break;
                     case 2:
-                        int maPhongBan;
-                        do {
-                            System.out.print("* Nhập mã phòng ban: ");
-                            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
-                            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
-                                System.out.println("* Mã phòng ban không tồn tại!");
-                            }
-                        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
-
-                        System.out.println("* Thông tin nhân viên quản lý: ");
-                        danhSachPhongBan.timPhongBan(maPhongBan).xemThongTinNhanVienQuanLy();
-                        System.out.println();
+                        danhSachPhongBan.xemThongTinNhanVienQuanLyPhongBan();
                         break;
                     case 3:
                         danhSachPhongBan.themNhanVienVaoPhongBan(danhSachNhanVien);

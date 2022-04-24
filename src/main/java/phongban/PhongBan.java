@@ -38,14 +38,6 @@ public class PhongBan {
                 "\nNhân viên quản lý: %s\n", this.maPhongBan, this.tenPhongBan, this.nhanVienQuanLy.getHoTen());
     }
 
-    /**
-     * Hàm xem thông tin của người quản lý phòng ban này
-     */
-    public void xemThongTinNhanVienQuanLy() {
-        System.out.printf("Mã nhân viên: %s\nHọ và tên: %s\nNgày nhậm chức: %d/%d/%d\n", this.getNhanVienQuanLy().getMaNhanVien(),
-                this.getNhanVienQuanLy().getHoTen(), this.ngayQuanLyNhamChuc.get(Calendar.DATE), this.ngayQuanLyNhamChuc.get(Calendar.MONTH) + 1, this.ngayQuanLyNhamChuc.get(Calendar.YEAR));
-    }
-
     //Các setter và getter
     public int getMaPhongBan() {
         return maPhongBan;

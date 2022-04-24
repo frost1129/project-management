@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -81,6 +82,7 @@ public class QuanLyPhongBan {
      * Hàm xem danh sách phòng ban hiện có
      */
     public void xemDanhSachPhongBan() {
+        System.out.println("========== DANH SÁCH PHÒNG BAN ==========");
         danhSachPhongBan.forEach(phongBan -> {
             phongBan.xemThongTin();
             System.out.println();
@@ -141,6 +143,26 @@ public class QuanLyPhongBan {
             this.timPhongBan(maPhongBan).getDanhSachNhanVienTrucThuoc().add(ds.timNhanVien(maNhanVien));
             System.out.print("* Thêm thành công! Tiếp tục (No - 0 / Yes - 1): ");
         } while (Integer.parseInt(CauHinh.sc.nextLine()) != 0);
+    }
+
+    /**
+     * Hàm xem thông tin của nhân viên quản lý ở 1 phòng ban
+     */
+    public void xemThongTinNhanVienQuanLyPhongBan() {
+        int maPhongBan;
+        do {
+            System.out.print("* Nhập mã phòng ban: ");
+            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!this.tonTaiPhongBan(maPhongBan)) {
+                System.out.println("* Mã phòng ban không tồn tại!");
+            }
+        } while (!this.tonTaiPhongBan(maPhongBan));
+
+        System.out.println("* Thông tin nhân viên quản lý: ");
+        System.out.printf("Mã nhân viên: %s\nHọ và tên: %s\nNgày nhậm chức: %d/%d/%d\n", this.timPhongBan(maPhongBan).getNhanVienQuanLy().getMaNhanVien(),
+                this.timPhongBan(maPhongBan).getNhanVienQuanLy().getHoTen(), this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.DATE),
+                this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.MONTH) + 1, this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.YEAR));
+        System.out.println();
     }
 
     /**
