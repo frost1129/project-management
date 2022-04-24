@@ -109,10 +109,9 @@ public abstract class NhanVien {
     /**
      * Thêm phòng ban trực thuộc, điều kiện phòng ban này có trong danh sách phòng ban
      * @param ds
-     * @param maPhongBan
      * @return true nếu thêm thành công, ngược lại false
      */
-    public void nhapPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
+    public void hoanThienThongTinPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
         for (PhongBan pb : ds) {
             if (pb.getMaPhongBan() == maPhongBan) {
                 this.phongBan = pb;

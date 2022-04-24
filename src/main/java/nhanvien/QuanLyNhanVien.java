@@ -37,6 +37,8 @@ public class QuanLyNhanVien {
                  * Dòng 9 (Trừ nhân viên quản lý với nhân viên bình thường): Lương thưởng thêm / số lỗi phát hiện
                  * Dòng 10: Kí tự "#" ngăn cách dữ liệu
                  */
+                NhanVien nhanVien;
+
                 String loaiNhanVien = sf.nextLine();
                 String hoTen = sf.nextLine();
 
@@ -49,39 +51,39 @@ public class QuanLyNhanVien {
                 PhongBan phongBan = new PhongBan();
                 phongBan.setMaPhongBan(Integer.parseInt(sf.nextLine()));
 
+
                 double heSoLuong = Double.parseDouble(sf.nextLine());
                 double luongCoBan = Double.parseDouble(sf.nextLine());
 
-                NhanVien nhanVien;
                 switch (loaiNhanVien) {
                     case "000" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
                         nhanVien = new NhanVienQuanLy(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
-                        nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
+                        nhanVien.hoanThienThongTinPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "001" -> {
                         sf.nextLine(); //Bỏ qua lương thưởng thêm, mặc định "-1"
                         nhanVien = new NhanVienBinhThuong(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
-                        nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
+                        nhanVien.hoanThienThongTinPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "002" -> {
                         double luongOverTime = Double.parseDouble(sf.nextLine());
                         nhanVien = new LapTrinhVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, luongOverTime);
-                        nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
+                        nhanVien.hoanThienThongTinPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "003" -> {
                         double bonus = Double.parseDouble(sf.nextLine());
                         nhanVien = new ThietKeVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, bonus);
-                        nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
+                        nhanVien.hoanThienThongTinPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                     case "004" -> {
                         int loiPhatHien = Integer.parseInt(sf.nextLine());
                         nhanVien = new KiemThuVien(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan, loiPhatHien);
-                        nhanVien.nhapPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
+                        nhanVien.hoanThienThongTinPhongBanTrucThuoc(QuanLyPhongBan.getDanhSachPhongBan(), phongBan.getMaPhongBan());
                         danhSachNhanVien.add(nhanVien);
                     }
                 }
@@ -108,7 +110,7 @@ public class QuanLyNhanVien {
         Class c = Class.forName(loaiNhanVien);
         NhanVien nv = (NhanVien) c.getConstructor().newInstance();
         nv.nhapThongTin();
-        nv.nhapPhongBanTrucThuoc(danhSachPhongBan, maPhongBan);
+        nv.hoanThienThongTinPhongBanTrucThuoc(danhSachPhongBan, maPhongBan);
     }
 
     /**

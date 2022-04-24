@@ -41,7 +41,7 @@ public class QuanLyPhongBan {
                 nv.setMaNhanVien(maNhanVienQuanLy);
                 nv.setNgayNhamChuc(CauHinh.c);
 
-                phongBan.themNhanVienQuanLy(nv);
+                phongBan.setNhanVienQuanLy(nv);
                 sf.nextLine(); //Bỏ qua kí tự "#"
                 danhSachPhongBan.add(phongBan);
             }
@@ -84,6 +84,7 @@ public class QuanLyPhongBan {
      */
     public void xemDanhSachPhongBan() {
         danhSachPhongBan.forEach(phongBan -> {
+            phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien());
             phongBan.xemThongTin();
             System.out.println();
         });

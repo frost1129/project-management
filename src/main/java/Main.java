@@ -80,9 +80,9 @@ public class Main {
                                     "\n* 2. Lập trình viên" +
                                     "\n* 3. Thiết kế viên" +
                                     "\n* 4. Kiểm thử viên" +
-                                    "\n Nhập lựa chọn (1 - 4): ");
+                                    "\n Nhập lựa chọn (0 - 4): ");
                             luaChonNhanVien = Integer.parseInt(CauHinh.sc.nextLine());
-                        } while (luaChonNhanVien < 1 || luaChonNhanVien > 4);
+                        } while (luaChonNhanVien < 0 || luaChonNhanVien > 4);
 
                         //Kiểm tra tồn tại dữ liệu phòng ban
                         int maPhongBan;
@@ -224,6 +224,46 @@ public class Main {
             }
         }
     }
+    //Hàm in menu các chức năng của phòng ban
+    public static void menuPhongBan () throws ParseException {
+        int luaChon;
+        while (true) {
+            System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
+                    "\n1. Xem danh sách phòng ban" +
+                    "\n2. Xem thông tin người quản lý phòng ban" +
+                    "\n3. Xem danh sách nhân viên của phòng ban" +
+                    "\n0. Thoát menu phòng ban" +
+                    "\nNhập lựa chọn (0 - 2): ");
+            luaChon = Integer.parseInt(CauHinh.sc.nextLine());
+            if (luaChon == 0) {
+                System.out.println("* Thoát menu phòng ban...");
+                break;
+            } else if (luaChon >= 1 && luaChon <= 3) {
+                switch (luaChon) {
+                    case 1:
+                        System.out.println("========== DANH SÁCH PHÒNG BAN ==========");
+                        danhSachPhongBan.xemDanhSachPhongBan();
+                        break;
+                    case 2:
+                        int maPhongBan;
+                        String maNhanVienQuanLy;
+                        do {
+                            System.out.print("* Nhập mã phòng ban: ");
+                            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+                            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
+                                System.out.println("* Mã phòng ban không tồn tại!");
+                            }
+                        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
+
+                        System.out.println("* Thông tin nhân viên quản lý: ");
+                        danhSachPhongBan.timPhongBan(maPhongBan).getNhanVienQuanLy().xemThongTin();
+                        System.out.println();
+                        break;
+
+                }
+            }
+        }
+    }
     //Hàm in menu các chức năng của dự án
     public static void menuDuAn () {
         System.out.print("--- CHỨC NĂNG DỰ ÁN ---" +
@@ -237,56 +277,5 @@ public class Main {
                 "\n8. Gán người quản lý cho dự án" +
                 "\n0. Thoát menu dự án" +
                 "\nNhập lựa chọn (0 - 8): ");
-    }
-    //Hàm in menu các chức năng của phòng ban
-    public static void menuPhongBan () throws ParseException {
-        int luaChon;
-        while (true) {
-            System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
-                    "\n1. Xem danh sách phòng ban" +
-                    "\n2. Thêm quản lý cho phòng ban" +
-                    "\n0. Thoát menu phòng ban" +
-                    "\nNhập lựa chọn (0 - 2): ");
-            luaChon = Integer.parseInt(CauHinh.sc.nextLine());
-            if (luaChon == 0) {
-                System.out.println("* Thoát menu phòng ban...");
-                break;
-            } else if (luaChon == 1) {
-                System.out.println("========== DANH SÁCH PHÒNG BAN ==========");
-                danhSachPhongBan.xemDanhSachPhongBan();
-            } else if (luaChon == 2) {
-                String maNhanVien;
-                int maPhongBan;
-                do {
-                    System.out.print("* Nhập mã phòng ban: ");
-                    maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
-                    if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
-                        System.out.println("* Mã phòng ban không tồn tại!");
-                    }
-                } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
-
-                do {
-                    System.out.print("* Nhập mã nhân viên quản lý: ");
-                    maNhanVien = CauHinh.sc.nextLine();
-                    if (!danhSachNhanVien.tonTaiNhanVien(maNhanVien)) {
-                        System.out.println("* Mã nhân viên không hợp lệ!");
-                    }
-                } while (!danhSachNhanVien.tonTaiNhanVien(maNhanVien));
-
-                //Kiểm tra nhân viên có vượt quá số lượng phòng ban được quản lý hay không?
-                System.out.print("* Nhập thời gian nhậm chức: " +
-                        "\n* Nhập ngày: ");
-                int ngay = Integer.parseInt(CauHinh.sc.nextLine());
-                System.out.print("* Nhập tháng: ");
-                int thang = Integer.parseInt(CauHinh.sc.nextLine());
-                System.out.print("* Nhập năm: ");
-                int nam = Integer.parseInt(CauHinh.sc.nextLine());
-                CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
-                ((NhanVienQuanLy) danhSachNhanVien.timNhanVien(maNhanVien)).setNgayNhamChuc(CauHinh.c);
-                ((NhanVienQuanLy) danhSachNhanVien.timNhanVien(maNhanVien)).setPhongBanQuanLy(danhSachPhongBan.timPhongBan(maPhongBan));
-                danhSachPhongBan.timPhongBan(maPhongBan).themNhanVienQuanLy(danhSachNhanVien.timNhanVien(maNhanVien));
-                System.out.println("* Thêm quản lý thành công!");
-            }
-        }
     }
 }

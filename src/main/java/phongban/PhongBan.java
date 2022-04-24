@@ -18,10 +18,16 @@ public class PhongBan {
     public PhongBan() {};
 
     /**
-     * Hàm thêm nhân viên quản lý cho phòng ban này
+     * Hàm hoàn thiện thông tin thuộc tính nhanVienQuanLy
+     * @param ds
      */
-    public void themNhanVienQuanLy(NhanVien nhanVienQuanLy) {
-        this.setNhanVienQuanLy((NhanVienQuanLy) nhanVienQuanLy);
+    public void hoanThienThongTinNhanVienQuanLy(List<NhanVien> ds) {
+        for(NhanVien nv: ds) {
+            if (nv.getMaNhanVien().equals(this.nhanVienQuanLy.getMaNhanVien())) {
+                this.nhanVienQuanLy = nv;
+                return;
+            }
+        }
     }
 
     /**
@@ -30,7 +36,7 @@ public class PhongBan {
     public void xemThongTin() {
         System.out.printf("Mã phòng ban: %d" +
                 "\nTên phòng ban: %s" +
-                "\nNhân viên quản lý: %s\n", this.maPhongBan, this.tenPhongBan, this.nhanVienQuanLy.getMaNhanVien());
+                "\nNhân viên quản lý: %s\n", this.maPhongBan, this.tenPhongBan, this.nhanVienQuanLy.getHoTen());
     }
 
     //Các setter và getter
