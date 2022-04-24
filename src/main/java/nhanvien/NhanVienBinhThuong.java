@@ -4,7 +4,7 @@ import phongban.PhongBan;
 
 import java.util.Calendar;
 
-public class NhanVienBinhThuong extends NhanVienQuanLy {
+public class NhanVienBinhThuong extends NhanVien {
     {
         super.setMaNhanVien("001" + super.getMaNhanVien());
     }
@@ -16,6 +16,6 @@ public class NhanVienBinhThuong extends NhanVienQuanLy {
 
     @Override
     public double tinhLuong() {
-        return super.tinhLuong();
+        return super.getHeSoLuong() * super.getLuongCoBan();
     }
 }

@@ -1,7 +1,6 @@
 package phongban;
 
 import dungchung.CauHinh;
-import nhanvien.NhanVien;
 import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
 
@@ -9,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,6 +37,7 @@ public class QuanLyPhongBan {
 
                 String maNhanVienQuanLy = sf.nextLine();
                 CauHinh.c.setTime(CauHinh.f.parse(sf.nextLine()));
+                phongBan.setNgayQuanLyNhamChuc(CauHinh.c);
                 NhanVienQuanLy nv = new NhanVienQuanLy();
                 nv.setMaNhanVien(maNhanVienQuanLy);
                 nv.setNgayNhamChuc(CauHinh.c);
@@ -49,11 +50,6 @@ public class QuanLyPhongBan {
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void docFile() {
-
     }
 
     /**
@@ -84,9 +80,17 @@ public class QuanLyPhongBan {
      */
     public void xemDanhSachPhongBan() {
         danhSachPhongBan.forEach(phongBan -> {
-            phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien());
             phongBan.xemThongTin();
             System.out.println();
+        });
+    }
+
+    /**
+     * Đồng bộ hóa dữ liệu từ các danh sách quản lý liên quan khác
+     */
+    public void hoanThienThongTinPhongBan() {
+        danhSachPhongBan.forEach(phongBan -> {
+            phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien());
         });
     }
 

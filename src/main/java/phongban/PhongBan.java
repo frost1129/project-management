@@ -1,9 +1,7 @@
 package phongban;
 
-import dungchung.CauHinh;
 import nhanvien.NhanVien;
 import nhanvien.NhanVienQuanLy;
-import nhanvien.QuanLyNhanVien;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +11,7 @@ public class PhongBan {
     private int maPhongBan;
     private String tenPhongBan;
     private NhanVien nhanVienQuanLy = new NhanVienQuanLy();
+    private Calendar ngayQuanLyNhamChuc;
     private List<NhanVien> danhSachNhanVienTrucThuoc = new ArrayList<>();
 
     public PhongBan() {};
@@ -39,6 +38,14 @@ public class PhongBan {
                 "\nNhân viên quản lý: %s\n", this.maPhongBan, this.tenPhongBan, this.nhanVienQuanLy.getHoTen());
     }
 
+    /**
+     * Hàm xem thông tin của người quản lý phòng ban này
+     */
+    public void xemThongTinNhanVienQuanLy() {
+        System.out.printf("Mã nhân viên: %s\nHọ và tên: %s\nNgày nhậm chức: %d/%d/%d\n", this.getNhanVienQuanLy().getMaNhanVien(),
+                this.getNhanVienQuanLy().getHoTen(), this.ngayQuanLyNhamChuc.get(Calendar.DATE), this.ngayQuanLyNhamChuc.get(Calendar.MONTH) + 1, this.ngayQuanLyNhamChuc.get(Calendar.YEAR));
+    }
+
     //Các setter và getter
     public int getMaPhongBan() {
         return maPhongBan;
@@ -57,7 +64,7 @@ public class PhongBan {
     }
 
     public List<NhanVien> getDanhSachNhanVienTrucThuoc() {
-        return danhSachNhanVienTrucThuoc;
+        return this.danhSachNhanVienTrucThuoc;
     }
 
     public void setDanhSachNhanVienTrucThuoc(List<NhanVien> danhSachNhanVienTrucThuoc) {
@@ -65,10 +72,18 @@ public class PhongBan {
     }
 
     public NhanVien getNhanVienQuanLy() {
-        return nhanVienQuanLy;
+        return this.nhanVienQuanLy;
     }
 
     public void setNhanVienQuanLy(NhanVienQuanLy nhanVienQuanLy) {
         this.nhanVienQuanLy = nhanVienQuanLy;
+    }
+
+    public Calendar getNgayQuanLyNhamChuc() {
+        return ngayQuanLyNhamChuc;
+    }
+
+    public void setNgayQuanLyNhamChuc(Calendar ngayQuanLyNhamChuc) {
+        this.ngayQuanLyNhamChuc = ngayQuanLyNhamChuc;
     }
 }
