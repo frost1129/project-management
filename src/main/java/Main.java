@@ -1,6 +1,5 @@
 import duan.QuanLyDuAn;
 import dungchung.CauHinh;
-import nhanvien.NhanVien;
 import nhanvien.QuanLyNhanVien;
 import phongban.QuanLyPhongBan;
 
@@ -8,9 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 
 public class Main {
-//    public static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
-//    public static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
-//    public static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
 
     public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         //Phần khai báo
@@ -18,6 +14,10 @@ public class Main {
         QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
         QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
         QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
+
+        danhSachNhanVien.dongBoHoaDuLieu();
+        danhSachPhongBan.dongBoHoaDuLieu();
+        danhSachDuAn.dongBoHoaDuLieu();
 
         while (true) {
             menuChinh();
@@ -83,7 +83,7 @@ public class Main {
                         danhSachNhanVien.xoaDuAnThamGiaCuaNhanVien();
                         break;
                     case 6:
-                        danhSachNhanVien.timNhanVien();
+                        danhSachNhanVien.xuatDanhSachNhanVienTimDuoc();
                         break;
                     case 7:
                         danhSachNhanVien.tinhLuongChoNhanVien();
@@ -132,17 +132,55 @@ public class Main {
         }
     }
     //Hàm in menu các chức năng của dự án
-    public static void menuDuAn (QuanLyNhanVien danhSachNhanVien, QuanLyPhongBan danhSachPhongBan, QuanLyDuAn danhSachDuAn) {
-        System.out.print("--- CHỨC NĂNG DỰ ÁN ---" +
-                "\n1. Thêm 1 dự án" +
-                "\n2. Sửa 1 dự án" +
-                "\n3. Xóa 1 dự án" +
-                "\n4. Xem danh sách nhân viên của 1 dự án" +
-                "\n5. Tìm kiếm dự án theo tên và thời điểm bắt đầu" +
-                "\n6. Sắp xếp dự án theo kinh phí đầu tư" +
-                "\n7. Gán nhân viên cho dự án" +
-                "\n8. Gán người quản lý cho dự án" +
-                "\n0. Thoát menu dự án" +
-                "\nNhập lựa chọn (0 - 8): ");
+    public static void menuDuAn (QuanLyNhanVien danhSachNhanVien, QuanLyPhongBan danhSachPhongBan, QuanLyDuAn danhSachDuAn) throws ParseException {
+        int luaChon;
+        while (true) {
+            System.out.print("--- CHỨC NĂNG DỰ ÁN ---" +
+                    "\n1. Thêm 1 dự án" +
+                    "\n2. Sửa 1 dự án" +
+                    "\n3. Xóa 1 dự án" +
+                    "\n4. Xem danh sách nhân viên của 1 dự án" +
+                    "\n5. Tìm kiếm dự án theo tên và thời điểm bắt đầu" +
+                    "\n6. Sắp xếp dự án theo kinh phí đầu tư" +
+                    "\n7. Gán nhân viên cho dự án" +
+                    "\n8. Gán người quản lý cho dự án" +
+                    "\n0. Thoát menu dự án" +
+                    "\nNhập lựa chọn (0 - 8): ");
+            luaChon = Integer.parseInt(CauHinh.sc.nextLine());
+            if (luaChon == 0) {
+                System.out.println("Thoát menu dự án...");
+                break;
+            } else if (luaChon >= 1 && luaChon <= 8) {
+                switch (luaChon) {
+                    case 1:
+                        danhSachDuAn.themDuAn(danhSachNhanVien);
+                        break;
+                    case 2:
+                        danhSachDuAn.suaDuAn(danhSachNhanVien);
+                        break;
+                    case 3:
+                        danhSachDuAn.xoaDuAn();
+                        break;
+                    case 4:
+                        danhSachDuAn.xemDanhSachNhanVienCuaDuAn();
+                        break;
+                    case 5:
+                        danhSachDuAn.xemDanhSachDuAnTimDuoc();
+                        break;
+                    case 6:
+                        danhSachDuAn.sapXepDuAn();
+                        danhSachDuAn.xemDanhSachDuAn();
+                        break;
+                    case 7:
+                        danhSachDuAn.themNhanVienChoDuAn(danhSachNhanVien);
+                        break;
+                    case 8:
+                        danhSachDuAn.themChuNhiemChoDuAn(danhSachNhanVien);
+                        break;
+                }
+            } else {
+                System.out.println("Lựa chọn không hợp lệ, nhập lại!");
+            }
+        }
     }
 }

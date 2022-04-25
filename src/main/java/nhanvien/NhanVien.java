@@ -49,7 +49,7 @@ public abstract class NhanVien {
     /**
      * Nhập thông tin nhân viên từ bàn phím
      */
-    public void nhapThongTin() throws ParseException {
+    public void nhapThongTin(QuanLyPhongBan danhSachPhongBan) throws ParseException {
         System.out.print("Nhập họ và tên: ");
         this.hoTen = CauHinh.sc.nextLine();
 
@@ -75,9 +75,15 @@ public abstract class NhanVien {
         System.out.print("Nhập lương cơ bản: ");
         this.luongCoBan = Double.parseDouble(CauHinh.sc.nextLine());
 
-        System.out.print("Nhập mã phòng ban: ");
-        this.phongBan = new PhongBan();
-        this.phongBan.setMaPhongBan(Integer.parseInt(CauHinh.sc.nextLine()));
+        int maPhongBan;
+        do {
+            System.out.print("Nhập mã phòng ban: ");
+            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
+                System.out.println("Mã phòng ban không tồn tại, nhập lại!");
+            }
+        } while (!danhSachPhongBan.tonTaiPhongBan(maPhongBan));
+        this.setPhongBan(danhSachPhongBan.timPhongBan(maPhongBan));
     }
 
     /**

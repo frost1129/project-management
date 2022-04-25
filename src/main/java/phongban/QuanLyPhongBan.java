@@ -54,8 +54,10 @@ public class QuanLyPhongBan {
         }
     }
 
-    public QuanLyPhongBan() {
-       danhSachPhongBan.forEach(phongBan -> phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien()));
+    public QuanLyPhongBan() {}
+
+    public void dongBoHoaDuLieu() {
+        danhSachPhongBan.forEach(nhanVien -> nhanVien.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien()));
     }
 
     /**
