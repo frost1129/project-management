@@ -19,7 +19,7 @@ public class QuanLyNhanVien {
     /**
      * Thêm dữ liệu từ file
      */
-    static {
+    {
         String url = "src/main/resources/danhsachnhanvien.txt";
         File file = new File(url);
         try {
@@ -186,6 +186,11 @@ public class QuanLyNhanVien {
         return null;
     }
 
+    /**
+     * Hàm kiểm tra nhân viên có tồn tại hay không dựa vào mã nhân viên
+     * @param maNhanVien
+     * @return
+     */
     public boolean tonTaiNhanVien(String maNhanVien) {
         for(NhanVien nhanVien : danhSachNhanVien) {
             if (nhanVien.getMaNhanVien().equals(maNhanVien)) {
@@ -212,7 +217,7 @@ public class QuanLyNhanVien {
     }
 
     /**
-     * Hàm tìm các nhân viên thỏa điều kiện tìm
+     * Hàm in danh sách các nhân viên thỏa điều kiện tìm
      * @throws ParseException
      */
     public void timNhanVien() throws ParseException {
@@ -411,7 +416,6 @@ public class QuanLyNhanVien {
             nhanVienQuanLy.setPhongBanQuanLy(maPhongBan);
 
             phongBanNhanQuanLy.setNhanVienQuanLy(nhanVienQuanLy);
-            System.out.println(nhanVienQuanLy.getPhongBanQuanLy().size());
             System.out.println("* Thêm thành công!");
         } else {
             System.out.println("* Vượt quá số lượng phòng ban cho phép quản lý!");
