@@ -1,7 +1,6 @@
 package phongban;
 
 import dungchung.CauHinh;
-import nhanvien.NhanVien;
 import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
 
@@ -16,7 +15,7 @@ import java.util.Scanner;
 public class QuanLyPhongBan {
     private static List<PhongBan> danhSachPhongBan = new ArrayList<>();
 
-    static {
+    {
         String url = "src/main/resources/danhsachphongban.txt";
         File file = new File(url);
         try {
@@ -53,6 +52,10 @@ public class QuanLyPhongBan {
         } catch (FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public QuanLyPhongBan() {
+       danhSachPhongBan.forEach(phongBan -> phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien()));
     }
 
     /**
@@ -163,13 +166,6 @@ public class QuanLyPhongBan {
                 this.timPhongBan(maPhongBan).getNhanVienQuanLy().getHoTen(), this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.DATE),
                 this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.MONTH) + 1, this.timPhongBan(maPhongBan).getNgayQuanLyNhamChuc().get(Calendar.YEAR));
         System.out.println();
-    }
-
-    /**
-     * Đồng bộ hóa dữ liệu từ các danh sách quản lý liên quan khác
-     */
-    public void hoanThienThongTinPhongBan() {
-        danhSachPhongBan.forEach(phongBan -> phongBan.hoanThienThongTinNhanVienQuanLy(QuanLyNhanVien.getDanhSachNhanVien()));
     }
 
     public static List<PhongBan> getDanhSachPhongBan() {

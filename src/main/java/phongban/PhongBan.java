@@ -10,7 +10,7 @@ import java.util.List;
 public class PhongBan {
     private int maPhongBan;
     private String tenPhongBan;
-    private NhanVien nhanVienQuanLy = new NhanVienQuanLy();
+    private NhanVien nhanVienQuanLy;
     private Calendar ngayQuanLyNhamChuc;
     private List<NhanVien> danhSachNhanVienTrucThuoc = new ArrayList<>();
 

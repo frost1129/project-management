@@ -8,14 +8,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 
 public class Main {
-    public static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
-    public static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
-    public static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
+//    public static QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
+//    public static QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
+//    public static QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
 
     public static void main (String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         //Phần khai báo
         int luaChonChinh;
-        danhSachPhongBan.hoanThienThongTinPhongBan();
+        QuanLyNhanVien danhSachNhanVien = new QuanLyNhanVien();
+        QuanLyPhongBan danhSachPhongBan = new QuanLyPhongBan();
+        QuanLyDuAn danhSachDuAn = new QuanLyDuAn();
 
         while (true) {
             menuChinh();
@@ -25,9 +27,9 @@ public class Main {
                 break;
             } else if (luaChonChinh >= 1 && luaChonChinh <= 3) {
                 switch (luaChonChinh) {
-                    case 1 -> menuNhanVien();
-                    case 2 -> menuPhongBan();
-                    case 3 -> menuDuAn();
+                    case 1 -> menuNhanVien(danhSachNhanVien, danhSachPhongBan, danhSachDuAn);
+                    case 2 -> menuPhongBan(danhSachNhanVien, danhSachPhongBan, danhSachDuAn);
+                    case 3 -> menuDuAn(danhSachNhanVien, danhSachPhongBan, danhSachDuAn);
                 }
             } else {
                 System.out.println("Lựa chọn không hợp lệ!");
@@ -45,7 +47,7 @@ public class Main {
                 "\nNhập lựa chọn (0 - 3): ");
     }
     //Hàm in menu các chức năng của nhân viên
-    public static void menuNhanVien () throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
+    public static void menuNhanVien (QuanLyNhanVien danhSachNhanVien, QuanLyPhongBan danhSachPhongBan, QuanLyDuAn danhSachDuAn) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ParseException {
         int luaChon;
         while (true) {
             System.out.print("--- CHỨC NĂNG NHÂN VIÊN ---" +
@@ -92,7 +94,7 @@ public class Main {
         }
     }
     //Hàm in menu các chức năng của phòng ban
-    public static void menuPhongBan () {
+    public static void menuPhongBan (QuanLyNhanVien danhSachNhanVien, QuanLyPhongBan danhSachPhongBan, QuanLyDuAn danhSachDuAn) {
         int luaChon;
         while (true) {
             System.out.print("--- CHỨC NĂNG PHÒNG BAN ---" +
@@ -126,7 +128,7 @@ public class Main {
         }
     }
     //Hàm in menu các chức năng của dự án
-    public static void menuDuAn () {
+    public static void menuDuAn (QuanLyNhanVien danhSachNhanVien, QuanLyPhongBan danhSachPhongBan, QuanLyDuAn danhSachDuAn) {
         System.out.print("--- CHỨC NĂNG DỰ ÁN ---" +
                 "\n1. Thêm 1 dự án" +
                 "\n2. Sửa 1 dự án" +

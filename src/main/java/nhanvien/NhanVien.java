@@ -3,6 +3,7 @@ package nhanvien;
 import duan.DuAn;
 import phongban.PhongBan;
 import dungchung.CauHinh;
+import phongban.QuanLyPhongBan;
 
 import java.text.ParseException;
 import java.util.*;
@@ -73,6 +74,10 @@ public abstract class NhanVien {
 
         System.out.print("Nhập lương cơ bản: ");
         this.luongCoBan = Double.parseDouble(CauHinh.sc.nextLine());
+
+        System.out.print("Nhập mã phòng ban: ");
+        this.phongBan = new PhongBan();
+        this.phongBan.setMaPhongBan(Integer.parseInt(CauHinh.sc.nextLine()));
     }
 
     /**
@@ -111,9 +116,9 @@ public abstract class NhanVien {
      * @param ds
      * @return true nếu thêm thành công, ngược lại false
      */
-    public void hoanThienThongTinPhongBanTrucThuoc(List<PhongBan> ds, int maPhongBan) {
+    public void hoanThienThongTinPhongBanTrucThuoc(List<PhongBan> ds) {
         for (PhongBan pb : ds) {
-            if (pb.getMaPhongBan() == maPhongBan) {
+            if (pb.getMaPhongBan() == this.getPhongBan().getMaPhongBan()) {
                 this.phongBan = pb;
                 return;
             }
