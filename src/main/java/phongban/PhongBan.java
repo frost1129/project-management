@@ -26,6 +26,9 @@ public class PhongBan {
                 this.nhanVienQuanLy = nv;
                 return;
             }
+            if (this.nhanVienQuanLy.getMaNhanVien().equals("-1")) {
+                this.nhanVienQuanLy.setHoTen("Chưa có quản lý");
+            }
         }
     }
 

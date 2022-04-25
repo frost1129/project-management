@@ -58,13 +58,14 @@ public class Main {
                     "\n5. Xóa danh sách dự án tham gia của 1 nhân viên" +
                     "\n6. Tìm kiếm nhân viên theo họ tên, ngày sinh, theo phòng ban" +
                     "\n7. Tính lương cho 1 nhân viên" +
+                    "\n8. Thêm phòng ban cho nhân viên quản lý" +
                     "\n0. Thoát menu nhân viên" +
-                    "\nNhập lựa chọn (0 - 7): ");
+                    "\nNhập lựa chọn (0 - 8): ");
             luaChon = Integer.parseInt(CauHinh.sc.nextLine());
             if (luaChon == 0) {
                 System.out.println("Thoát chức năng nhân viên...");
                 break;
-            } else if (luaChon >= 1 && luaChon <= 7) {
+            } else if (luaChon >= 1 && luaChon <= 8) {
                 switch (luaChon) {
                     case 1:
                         danhSachNhanVien.themNhanVien(danhSachPhongBan);
@@ -86,6 +87,9 @@ public class Main {
                         break;
                     case 7:
                         danhSachNhanVien.tinhLuongChoNhanVien();
+                        break;
+                    case 8:
+                        danhSachNhanVien.themPhongBanCuaNhanVienQuanLy(danhSachPhongBan);
                         break;
                 }
             } else {

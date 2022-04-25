@@ -18,3 +18,18 @@ Phòng Ngoại giao
 00000009
 14/01/2021
 #
+5
+Phòng Marketing
+-1
+01/01/1900
+#
+6
+Phòng Nghiên cứu
+-1
+01/01/1900
+#
+7
+Phòng Tài chính
+-1
+01/01/1900
+#

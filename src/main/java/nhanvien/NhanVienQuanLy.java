@@ -20,6 +20,20 @@ public class NhanVienQuanLy extends NhanVien {
         super(hoTen, ngaySinh, email, gioiTinh, phongBan, heSoLuong, luongCoBan);
     }
 
+    /**
+     * Hàm kiểm tra phòng ban quản lý của nhân viên có tồn tại hay không
+     * @param maPhongBan
+     * @return nếu có trả true, ngược lại false
+     */
+    public boolean tonTaiPhongBanDaQuanLy(int maPhongBan) {
+        for(Integer ma : phongBanQuanLy) {
+            if (ma == maPhongBan) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public double tinhLuong() {
         return super.getHeSoLuong() * super.getLuongCoBan();

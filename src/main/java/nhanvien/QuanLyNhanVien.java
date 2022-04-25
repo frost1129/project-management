@@ -354,6 +354,70 @@ public class QuanLyNhanVien {
                 this.timNhanVien(maNhanVien).tinhLuong());
     }
 
+    public void themPhongBanCuaNhanVienQuanLy(QuanLyPhongBan danhSachPhongBan) throws ParseException {
+        System.out.println("========== DANH SÁCH NHÂN VIÊN QUẢN LÝ ==========");
+        int dem = 0;
+        for (NhanVien nv: danhSachNhanVien) {
+            if (nv instanceof NhanVienQuanLy) {
+                System.out.printf("* %d. %s - %s\n", ++dem, nv.getMaNhanVien(), nv.getHoTen());
+            }
+        }
+        System.out.println();
+
+        String maNhanVien;
+        do {
+            System.out.print("* Nhập 5 số cuối mã nhân viên: ");
+            maNhanVien = "000" + CauHinh.sc.nextLine();
+            if (!this.tonTaiNhanVien(maNhanVien)) {
+                System.out.println("* Mã nhân viên quản lý không tồn tại!");
+            }
+        } while (!this.tonTaiNhanVien(maNhanVien));
+
+        //Kiểm tra dữ liệu hợp lệ của phòng ban sắp được thêm
+        int maPhongBan;
+        boolean flag;
+        do {
+            flag = true;
+            System.out.print("* Nhập mã phòng ban muốn quản lý: ");
+            maPhongBan = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!danhSachPhongBan.tonTaiPhongBan(maPhongBan)) {
+                flag = false;
+                System.out.println("* Mã phòng ban không tồn tại, nhập lại!");
+            } else {
+                if (((NhanVienQuanLy)this.timNhanVien(maNhanVien)).tonTaiPhongBanDaQuanLy(maPhongBan)) {
+                    flag = false;
+                    System.out.println("* Nhân viên đang quản lý phòng ban này, nhập lại!");
+                }
+                if (!danhSachPhongBan.timPhongBan(maPhongBan).getNhanVienQuanLy().getMaNhanVien().equals("-1")) {
+                    flag = false;
+                    System.out.println("* Phòng ban này đã có người quản lý, nhập lại!");
+                }
+            }
+        } while (!flag);
+
+        //Kiểm tra số lượng phòng ban được phép quản lý
+        NhanVienQuanLy nhanVienQuanLy = ((NhanVienQuanLy) this.timNhanVien(maNhanVien));
+        PhongBan phongBanNhanQuanLy = danhSachPhongBan.timPhongBan(maPhongBan);
+        if (nhanVienQuanLy.getPhongBanQuanLy().size() < 2) {
+            System.out.print("* Nhập ngày nhậm chức: ");
+            int ngay = Integer.parseInt(CauHinh.sc.nextLine());
+            System.out.print("* Nhập tháng nhậm chức: ");
+            int thang = Integer.parseInt(CauHinh.sc.nextLine());
+            System.out.print("* Nhập năm nhậm chức: ");
+            int nam = Integer.parseInt(CauHinh.sc.nextLine());
+
+            CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+            nhanVienQuanLy.setNgayNhamChuc(CauHinh.c);
+            nhanVienQuanLy.setPhongBanQuanLy(maPhongBan);
+
+            phongBanNhanQuanLy.setNhanVienQuanLy(nhanVienQuanLy);
+            System.out.println(nhanVienQuanLy.getPhongBanQuanLy().size());
+            System.out.println("* Thêm thành công!");
+        } else {
+            System.out.println("* Vượt quá số lượng phòng ban cho phép quản lý!");
+        }
+    }
+
     //Các setter và getter
     public static List<NhanVien> getDanhSachNhanVien() {
         return danhSachNhanVien;
