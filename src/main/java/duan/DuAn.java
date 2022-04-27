@@ -5,9 +5,7 @@ import nhanvien.NhanVien;
 import nhanvien.QuanLyNhanVien;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class DuAn {
     private static int dem = 0;
@@ -35,8 +33,9 @@ public class DuAn {
         thang = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("Nhập năm: ");
         nam = Integer.parseInt(CauHinh.sc.nextLine());
-        CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
-        this.setNgayBatDau(CauHinh.c);
+        Calendar ngayBatDau = new GregorianCalendar();
+        ngayBatDau.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+        this.setNgayBatDau(ngayBatDau);
 
         System.out.print("Nhập thời điểm kết thúc: \n");
         System.out.print("Nhập ngày: ");
@@ -45,19 +44,18 @@ public class DuAn {
         thang = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("Nhập năm: ");
         nam = Integer.parseInt(CauHinh.sc.nextLine());
-        CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
-        this.setNgayKetThuc(CauHinh.c);
+        Calendar ngayKetThuc = new GregorianCalendar();
+        ngayKetThuc.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+        this.setNgayKetThuc(ngayKetThuc);
 
         System.out.print("Nhập kinh phí đầu tư: ");
         this.tongKinhPhi = Double.parseDouble(CauHinh.sc.nextLine());
 
         String maChuNhiem;
-        boolean flag = true;
         do {
             System.out.print("Nhập mã chủ nhiệm dự án: ");
             maChuNhiem = CauHinh.sc.nextLine();
             if (!danhSachNhanVien.tonTaiNhanVien(maChuNhiem)) {
-                flag = false;
                 System.out.println("Mã nhân viên không tồn tại, nhập lại");
             }
         } while (!danhSachNhanVien.tonTaiNhanVien(maChuNhiem));
@@ -68,12 +66,12 @@ public class DuAn {
      * Ham xem thong tin cua 1 du an
      */
     public void xemThongTin() {
-        System.out.printf("* Mã dự án: %d", this.maDuAn);
-        System.out.printf("* Tên dự án: %s", this.tenDuAn);
-        System.out.printf("* Ngày bắt đầu: %d/%d/%d", this.getNgayBatDau().get(Calendar.DATE), this.getNgayBatDau().get(Calendar.MONTH) + 1, this.getNgayBatDau().get(Calendar.YEAR));
-        System.out.printf("* Ngày bắt đầu: %d/%d/%d", this.getNgayKetThuc().get(Calendar.DATE), this.getNgayKetThuc().get(Calendar.MONTH) + 1, this.getNgayKetThuc().get(Calendar.YEAR));
-        System.out.printf("* Tổng kinh phí: %.1f", this.tongKinhPhi);
-        System.out.printf("* Chủ nhiệm dự án: ", this.getChuNhiemDuAn().getHoTen());
+        System.out.printf("* Mã dự án: %d\n", this.maDuAn);
+        System.out.printf("* Tên dự án: %s\n", this.tenDuAn);
+        System.out.printf("* Ngày bắt đầu: %d/%d/%d\n", this.getNgayBatDau().get(Calendar.DATE), this.getNgayBatDau().get(Calendar.MONTH) + 1, this.getNgayBatDau().get(Calendar.YEAR));
+        System.out.printf("* Ngày bắt đầu: %d/%d/%d\n", this.getNgayKetThuc().get(Calendar.DATE), this.getNgayKetThuc().get(Calendar.MONTH) + 1, this.getNgayKetThuc().get(Calendar.YEAR));
+        System.out.printf("* Tổng kinh phí: %.1f VNĐ\n", this.tongKinhPhi);
+        System.out.printf("* Chủ nhiệm dự án: %s\n", this.getChuNhiemDuAn().getHoTen());
     }
 
     /**
@@ -86,23 +84,25 @@ public class DuAn {
         System.out.print("* Nhập tên dự án mới: ");
         this.setTenDuAn(CauHinh.sc.nextLine());
 
-        System.out.println("* Nhập thời gian bắt đầu: \n** Nhập ngày: ");
+        System.out.print("* Nhập thời gian bắt đầu: \n** Nhập ngày: ");
         ngay = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("** Nhập tháng: ");
         thang = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("** Nhập năm: ");
         nam = Integer.parseInt(CauHinh.sc.nextLine());
-        CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
-        this.setNgayBatDau(CauHinh.c);
+        Calendar ngayBatDau = new GregorianCalendar();
+        ngayBatDau.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+        this.setNgayBatDau(ngayBatDau);
 
-        System.out.println("* Nhập thời gian kết thúc: \n** Nhập ngày: ");
+        System.out.print("* Nhập thời gian kết thúc: \n** Nhập ngày: ");
         ngay = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("** Nhập tháng: ");
         thang = Integer.parseInt(CauHinh.sc.nextLine());
         System.out.print("** Nhập năm: ");
         nam = Integer.parseInt(CauHinh.sc.nextLine());
-        CauHinh.c.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
-        this.setNgayKetThuc(CauHinh.c);
+        Calendar ngayKetThuc = new GregorianCalendar();
+        ngayKetThuc.setTime(CauHinh.f.parse(ngay + "/" + thang + "/" + nam));
+        this.setNgayKetThuc(ngayKetThuc);
 
         System.out.print("* Nhập tổng kinh phí mới: ");
         this.setTongKinhPhi(Double.parseDouble(CauHinh.sc.nextLine()));
@@ -128,7 +128,7 @@ public class DuAn {
         }
         int dem = 0;
         for (NhanVien nv: this.danhSachNhanVienThamGia) {
-            System.out.printf("%d. %s - %s", ++dem, nv.getMaNhanVien(), nv.getHoTen());
+            System.out.printf("%d. %s - %s\n", ++dem, nv.getMaNhanVien(), nv.getHoTen());
         }
     }
 
@@ -150,8 +150,11 @@ public class DuAn {
     public void hoanThienThongTinChuNhiemDuAn(List<NhanVien> ds) {
         for (NhanVien nv: ds) {
             if (nv.getMaNhanVien().equals(this.getChuNhiemDuAn().getMaNhanVien())) {
-                this.setChuNhiemDuAn(nv);
+                this.chuNhiemDuAn = nv;
                 return;
+            }
+            if (this.getChuNhiemDuAn().getMaNhanVien().equals("-1")) {
+                this.getChuNhiemDuAn().setHoTen("Chưa có chủ nhiệm dự án");
             }
         }
     }

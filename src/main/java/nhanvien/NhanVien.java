@@ -33,7 +33,7 @@ public abstract class NhanVien {
     /**
      * Phương thức khởi tạo không tham số này dùng cho phương thức themNhanVien ở class QuanLyNhanVien
      */
-    public NhanVien() {};
+    public NhanVien() {}
 
     public NhanVien(String hoTen, Calendar ngaySinh, String email, String gioiTinh, PhongBan phongBan,
                     double heSoLuong, double luongCoBan) {
@@ -107,11 +107,11 @@ public abstract class NhanVien {
         if (this.danhSachDuAnThamGia.isEmpty()) {
             System.out.println("Danh sách rỗng!");
         } else {
-            System.out.printf("Danh sách dự án tham gia của %s\n", this.hoTen);
             for (DuAn duAn : danhSachDuAnThamGia) {
-                System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %s\nNgày kết thúc: %s" +
-                                "\nTổng kinh phí: %f\nChủ nhiệm dự án: %s\n\n", duAn.getMaDuAn(), duAn.getTenDuAn(),
-                        CauHinh.f.format(duAn.getNgayBatDau()), CauHinh.f.format(duAn.getNgayKetThuc()), duAn.getTongKinhPhi(),
+                System.out.printf("Mã dự án: %d\nTên dự án: %s\nNgày bắt đầu: %d/%d/%d\nNgày kết thúc: %d/%d/%d" +
+                                "\nTổng kinh phí: %.1f VNĐ\nChủ nhiệm dự án: %s\n", duAn.getMaDuAn(), duAn.getTenDuAn(),
+                        duAn.getNgayBatDau().get(Calendar.DATE), duAn.getNgayBatDau().get(Calendar.MONTH) + 1, duAn.getNgayBatDau().get(Calendar.YEAR),
+                        duAn.getNgayKetThuc().get(Calendar.DATE), duAn.getNgayKetThuc().get(Calendar.MONTH) + 1, duAn.getNgayKetThuc().get(Calendar.YEAR), duAn.getTongKinhPhi(),
                         duAn.getChuNhiemDuAn().getHoTen());
             }
         }
@@ -120,7 +120,6 @@ public abstract class NhanVien {
     /**
      * Thêm phòng ban trực thuộc, điều kiện phòng ban này có trong danh sách phòng ban
      * @param ds
-     * @return true nếu thêm thành công, ngược lại false
      */
     public void hoanThienThongTinPhongBanTrucThuoc(List<PhongBan> ds) {
         for (PhongBan pb : ds) {

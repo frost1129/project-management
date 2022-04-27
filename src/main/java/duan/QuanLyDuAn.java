@@ -2,9 +2,7 @@ package duan;
 
 import dungchung.CauHinh;
 import nhanvien.NhanVien;
-import nhanvien.NhanVienQuanLy;
 import nhanvien.QuanLyNhanVien;
-import phongban.PhongBan;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,7 +67,7 @@ public class QuanLyDuAn {
         }
     }
 
-    public QuanLyDuAn() {};
+    public QuanLyDuAn() {}
 
     public void dongBoHoaDuLieu() {
         danhSachDuAn.forEach(duAn -> duAn.hoanThienThongTinChuNhiemDuAn(QuanLyNhanVien.getDanhSachNhanVien()));
@@ -84,7 +82,7 @@ public class QuanLyDuAn {
         DuAn duAn = new DuAn();
         duAn.nhapThongTin(danhSachNhanVien);
         danhSachDuAn.add(duAn);
-        System.out.println("Thêm dự án thành công!");
+        System.out.println("---> Thêm dự án thành công!");
     }
 
     /**
@@ -93,40 +91,31 @@ public class QuanLyDuAn {
      * @throws ParseException
      */
     public void suaDuAn(QuanLyNhanVien danhSachNhanVien) throws ParseException {
-        int maDuAn;
-        do {
-            System.out.print("* Nhập mã dự án: ");
-            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
-            if (!this.tonTaiDuAn(maDuAn)) {
-                System.out.println("* Mã dự án không tồn tại, nhập lại!");
-            }
-        } while (!this.tonTaiDuAn(maDuAn));
-
+        int maDuAn = xacThucMaDuAnTonTai();
         this.timDuAn(maDuAn).suaThongTin(danhSachNhanVien);
+        System.out.println("---> Sửa dự án thành công!");
     }
 
     /**
      * Hàm xóa 1 dự án
-     * @return xóa thành công trả về true, ngược lại false
      */
     public void xoaDuAn() {
-        int maDuAn;
-        do {
-            System.out.print("* Nhập mã dự án: ");
-            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
-            if (!this.tonTaiDuAn(maDuAn)) {
-                System.out.println("* Mã dự án không tồn tại, nhập lại!");
-            }
-        } while (!this.tonTaiDuAn(maDuAn));
-
+        int maDuAn = this.xacThucMaDuAnTonTai();
+        //Xóa dự án trong mỗi danh sách tham gia của từng nhân viên
+        int finalMaDuAn = maDuAn;
+        QuanLyNhanVien.getDanhSachNhanVien().forEach(nhanVien -> {
+            nhanVien.getDanhSachDuAnThamGia().remove(this.timDuAn(finalMaDuAn));
+        });
+        //Xóa dự án
         danhSachDuAn.remove(this.timDuAn(maDuAn));
-        System.out.println("* Xóa thành công!");
+        System.out.println("---> Xóa dự án thành công!");
     }
 
     /**
      * Hàm xem danh sách dự án hiện có
      */
     public void xemDanhSachDuAn() {
+        System.out.println("========== DANH SÁCH DỰ ÁN ==========");
         danhSachDuAn.forEach(duAn -> {
             duAn.xemThongTin();
             System.out.println();
@@ -137,15 +126,7 @@ public class QuanLyDuAn {
      * Hàm xem danh sách nhân viên tham gia theo mã dự án
      */
     public void xemDanhSachNhanVienCuaDuAn() {
-        int maDuAn;
-        do {
-            System.out.print("* Nhập mã dự án muốn xem: ");
-            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
-            if (!this.tonTaiDuAn(maDuAn)) {
-                System.out.println("* Mã dự án không tồn tại, nhập lại!");
-            }
-        } while (!this.tonTaiDuAn(maDuAn));
-
+        int maDuAn = this.xacThucMaDuAnTonTai();
         this.timDuAn(maDuAn).xemDanhSachNhanVienThamGia();
     }
 
@@ -230,16 +211,14 @@ public class QuanLyDuAn {
      * @param danhSachNhanVien
      */
     public void themNhanVienChoDuAn(QuanLyNhanVien danhSachNhanVien) {
-        int maDuAn;
+        int maDuAn = this.xacThucMaDuAnTonTai();
         String maNhanVien;
-        do {
-            System.out.print("* Nhập mã dự án: ");
-            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
-            if (!this.tonTaiDuAn(maDuAn)) {
-                System.out.println("* Mã dự án không tồn tại, nhập lại!");
-            }
-        } while (!this.tonTaiDuAn(maDuAn));
-
+        System.out.println("========== DANH SÁCH NHÂN VIÊN ==========");
+        int chiSoDem = 0;
+        for (NhanVien nhanVien: QuanLyNhanVien.getDanhSachNhanVien()) {
+            System.out.printf("%d. %s - %s\n", ++chiSoDem, nhanVien.getMaNhanVien(), nhanVien.getHoTen());
+        }
+        System.out.println();
         //Kiểm tra điều kiện tối thiểu 5 người
         if (this.timDuAn(maDuAn).getDanhSachNhanVienThamGia().size() < 5) {
             System.out.println("* Dự án đang không đủ số người tối thiểu (>= 5), tiến hành nhập đủ 5 nhân viên: ");
@@ -259,6 +238,8 @@ public class QuanLyDuAn {
                         }
                     }
                 } while (!flag);
+                this.timDuAn(maDuAn).getDanhSachNhanVienThamGia().add(danhSachNhanVien.timNhanVien(maNhanVien));
+                System.out.println("---> Thêm 5 nhân viên thành công!");
             }
         }
         //Kiểm tra điều kiện tối đa 10 người
@@ -279,15 +260,26 @@ public class QuanLyDuAn {
                 }
             } while (!flag);
             this.timDuAn(maDuAn).themNhanVienThamGia(danhSachNhanVien.timNhanVien(maNhanVien));
-            System.out.println("* Thêm nhân viên thành công!");
+            System.out.println("---> Thêm nhân viên thành công!");
         } else {
-            System.out.println("* Thất bại, dự án vượt quá số người tham gia!");
+            System.out.println("---> Thất bại, dự án vượt quá số người tham gia!");
         }
     }
 
+    /**
+     * Hàm thêm chủ nhiệm cho dự án
+     * @param danhSachNhanVien
+     */
     public void themChuNhiemChoDuAn(QuanLyNhanVien danhSachNhanVien) {
         int maDuAn;
         boolean flag;
+
+        System.out.println("========== DANH SÁCH DỰ ÁN ==========");
+        int chiSoDem = 0;
+        for(DuAn duAn: danhSachDuAn) {
+            System.out.printf("%d. %s - %s - %s\n", ++chiSoDem, duAn.getMaDuAn(), duAn.getTenDuAn(), duAn.getChuNhiemDuAn().getHoTen());
+        }
+
         do {
             flag = true;
             System.out.print("* Nhập mã dự án: ");
@@ -303,6 +295,11 @@ public class QuanLyDuAn {
             }
         } while (!flag);
 
+        System.out.println("========== DANH SÁCH NHÂN VIÊN ==========");
+        chiSoDem = 0;
+        for (NhanVien nhanVien: QuanLyNhanVien.getDanhSachNhanVien()) {
+            System.out.printf("%d. %s - %s\n", ++chiSoDem, nhanVien.getMaNhanVien(), nhanVien.getHoTen());
+        }
         String maChuNhiem;
         do {
             System.out.print("* Nhập mã chủ nhiệm: ");
@@ -312,7 +309,23 @@ public class QuanLyDuAn {
             }
         } while (!danhSachNhanVien.tonTaiNhanVien(maChuNhiem));
         this.timDuAn(maDuAn).setChuNhiemDuAn(danhSachNhanVien.timNhanVien(maChuNhiem));
-        System.out.println("* Thêm chủ nhiệm thành công!");
+        System.out.println("---> Thêm chủ nhiệm thành công!");
+    }
+
+    /**
+     * Hàm yêu cầu nhập và xác nhận tồn tại dự án thông qua mã dự án
+     * @return trả về mã dự án nếu dự án tồn tại
+     */
+    public int xacThucMaDuAnTonTai() {
+        int maDuAn;
+        do {
+            System.out.print("* Nhập mã dự án: ");
+            maDuAn = Integer.parseInt(CauHinh.sc.nextLine());
+            if (!this.tonTaiDuAn(maDuAn)) {
+                System.out.println("* Mã dự án không tồn tại, nhập lại!");
+            }
+        } while (!this.tonTaiDuAn(maDuAn));
+        return maDuAn;
     }
 
     //Các setter và getter
